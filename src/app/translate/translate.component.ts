@@ -11,6 +11,7 @@ export class TranslateComponent implements OnInit {
   cantServ = 0;
   salida: string = "";
   stringTemp: string = "";
+  cantidadReglas = 0;
 
   constructor() {
     this.salida = "nada";
@@ -47,17 +48,18 @@ export class TranslateComponent implements OnInit {
       console.log(nombreAtr);
     }*/
 
-
+    console.log(this.servicios);
+    this.confeccionarStringFinal();
   }
 
   agregarServicio(nombre:string){
     if(this.servicios.find(x=> x[1] === nombre)){
       //Si ya lo tengo agregado al servicio
-      console.log('ya existia ese servicio');
+      console.log('ya existia ese servicio: ' + nombre);
     }
     else{
       //Si no existia ese servicio
-      console.log('No existia el servicio');
+      console.log('No existia el servicio: '+ nombre);
       this.servicios.push([this.cantServ,nombre]);
       this.cantServ++;
     }
@@ -76,6 +78,10 @@ export class TranslateComponent implements OnInit {
       this.traducirPuntoEspecifico(servicio.name, servicio.SpecificVariationPoint);
     }
 
+    if(servicio.uses != null){
+      this.traducirUsa(servicio.name,servicio.uses);
+    }
+
     console.log('el string esta de la siguiente manera..');
     console.log(this.stringTemp);
   }
@@ -90,16 +96,19 @@ export class TranslateComponent implements OnInit {
     for(var atr in punto){
       if(atr === 'AlternativeVP'){
         tipo = 'Alternativo';
-        this.traducirAlternativo(propietario,punto[atr]);
+        console.log('el tipo de punto variante es ' + tipo);
+        this.traducirAlternativo(propietario,punto[atr].service);
       }
 
       if(atr === 'MandatoryVP'){
         tipo = 'Mandatorio';
-        this.traducirMandatory(propietario,punto[atr]);
+        console.log('el tipo de punto variante es ' + tipo);
+        this.traducirMandatory(propietario,punto[atr].service);
       }
 
       if(atr === 'OptionalVP'){
         tipo = 'Opcional';
+        console.log('el tipo de punto variante es ' + tipo);
         console.log(punto[atr].service);
         this.traducirOpcional(propietario,punto[atr].service);
 
@@ -107,9 +116,10 @@ export class TranslateComponent implements OnInit {
 
       if(atr === 'VariantVP'){
         tipo = 'Variante';
-        this.traducirVariante(propietario,punto[atr]);
+        console.log('el tipo de punto variante es ' + tipo);
+        this.traducirVariante(propietario,punto[atr].service);
       }
-      console.log('el tipo de punto variante es ' + tipo);
+
 
       //REVISAR SI LO SIGUIENTE VA NO O ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -118,7 +128,6 @@ export class TranslateComponent implements OnInit {
       let servicios = punto[atr].service;
       console.log(servicios);
       for (let i = 0; i < servicios.length; i++) {
-        console.log('llalalalalal' + servicios[i]);
         this.traducirServicio(servicios[i]);
       }
     }
@@ -126,36 +135,153 @@ export class TranslateComponent implements OnInit {
 
 
   traducirMandatory(propietario: string ,serviciosRel: any){
+    console.log('ENTRE A TRADUCIR MANDATORY........ para el servicio: ' + propietario);
+    let numP = this.devolverNumeroServicio(propietario);
+    console.log(serviciosRel);
+    for (let i = 0; i < serviciosRel.length; i++) {
+      this.agregarServicio(serviciosRel[i].name);
+      let numS = this.devolverNumeroServicio(serviciosRel[i].name);
+      console.log('el numero del servicio ' + serviciosRel[i].name + '  es:  '+  numS);
+      let regla = '-'+numP + ' ' + numS + ' 0 \n';
+      console.log('REGLA DEL MANDATORY = :  ' + regla);
+      this.agregarRegla(regla);
+    }
   }
 
   traducirOpcional(propietario: string ,serviciosRel: any){
+    console.log('ENTRE A TRADUCIR OPCIONAL....... para el servicio: ' + propietario);
+    console.log('Mis ServRel son: '+ serviciosRel.service);
     let numP = this.devolverNumeroServicio(propietario);
     for (let i = 0; i < serviciosRel.length; i++) {
         this.agregarServicio(serviciosRel[i].name);
         let numS = this.devolverNumeroServicio(serviciosRel[i].name);
         console.log('el numero del servicio ' + serviciosRel[i].name + '  es:  '+  numS);
-        let regla = numP + ' -' + numS + ' ' + numS + ' 0 \n';
+        let regla = '-'+numP + ' -' + numS + ' ' + numS + ' 0 \n';
+        console.log('REGLA DEL OPCIONAL = :  ' + regla);
         this.agregarRegla(regla);
     }
 
   }
 
   traducirAlternativo(propietario: string ,serviciosRel: any){
+    console.log('ENTRE A TRADUCIR ALTERNATIVO....... para el servicio: ' + propietario);
+    console.log('Mis ServRel son: '+ serviciosRel);
+    let serviciosHijos = [];
+    let numP = this.devolverNumeroServicio(propietario);
+    for (let i = 0; i < serviciosRel.length; i++) {
+      console.log('La longitud de hijos es de: ' + serviciosRel.length);
+      this.agregarServicio(serviciosRel[i].name);
+      let numS = this.devolverNumeroServicio(serviciosRel[i].name);
+      console.log('el numero del servicio ' + serviciosRel[i].name + '  es:  '+  numS);
+      serviciosHijos.push(numS);
+    }
+    console.log('Alternativo, Soy: '+ propietario + '  con mi numero: ' + numP);
+    console.log("Y mis servicios hijos son: " + serviciosHijos);
+
+    let regla = '';
+    regla = '-' + numP;
+    for (let i = 0; i < serviciosHijos.length; i++) {
+        regla = regla + ' ' + serviciosHijos[i];
+    }
+    regla = regla + ' 0 \n';
+    console.log('1º Regla alternativa: ' + regla);
+    this.agregarRegla(regla);
+
+    //Reinicio la variable Regla temporal.
+    regla = '';
+    //A continuacion agregaremos las reglas de solo 1 positvo.
+    for (let i = 0; i < serviciosHijos.length; i++) {
+      regla = '-' + numP;
+      for (let j = 0; j < serviciosHijos.length; j++) {
+          if(i == j){
+            //Entonces este sera el elemento positivo (solo se va a dar 1 vez en todas las vueltas para cada servicio)
+            regla = regla + ' ' + serviciosHijos[j];
+          }
+          else{
+            regla = regla + ' -' + serviciosHijos[j];
+          }
+      }
+      regla = regla + ' 0 \n';
+      console.log(i+'º Regla alternativa: ' + regla);
+      this.agregarRegla(regla);
+    }
+
+    //Ahora debemos agregar las combinaciones de los hijos.
+    /** REVISAR CUANDO LA CANTIDAD DE HIJOS ES 2 O MAS DE 3!!! HARDCODEADO PARA 3 SOLAMENTE */
+    regla = '';
+    for (let i = 0; i < serviciosHijos.length; i++) {
+      if(i==(serviciosHijos.length-1)){
+        regla = '-'+serviciosHijos[i] + ' -'+serviciosHijos[0] + ' 0 \n';
+        console.log('Regla giratoria del alternativo...');
+      }
+      else{
+        regla = '-'+serviciosHijos[i] + ' -'+serviciosHijos[i+1] + ' 0 \n';
+      }
+
+      console.log('Regla combinatoria... : ' + regla);
+      this.agregarRegla(regla);
+      regla = ''; //Limpio la regla por las dudas...
+    }
 
   }
 
   traducirVariante(propietario: string ,serviciosRel: any){
+    console.log('ENTRE A TRADUCIR VARIANTE....... para el servicio: ' + propietario);
+    console.log('Mis ServRel son: '+ serviciosRel);
 
   }
 
-  traducirUsa(serviciosUsados: any){
+  traducirUsa(propietario: string ,serviciosUsados: any){
+    console.log('ENTRE AL USA PARA EL SERVICIO: ' + propietario);
+    console.log('Los servicios usados son: ' + serviciosUsados.service);
+    console.log(serviciosUsados);
 
+    let numP = this.devolverNumeroServicio(propietario);
+    if(serviciosUsados.length == null){
+      //ESTO SIGNIFICA QUE ES SOLO 1 EL SERVICIO USADO.
+      console.log(serviciosUsados.service);
+      this.agregarServicio(serviciosUsados.service.name);
+      let numS = this.devolverNumeroServicio(serviciosUsados.service.name);
+      let regla = '-'+ numP + ' ' + numS + ' 0 \n';
+      this.agregarRegla(regla);
+      regla = '-'+ numS + ' ' + numP + ' 0 \n';
+      this.agregarRegla(regla);
+
+      this.traducirServicio(serviciosUsados.service);
+
+    }
+    else{
+      //ESTO SIGNIFICA QUE EXISTEN MAS DE 1 SERVICIO USADO.
+
+      console.log('Longitud de servicios de USA de: ' + propietario + ' es igual a : ' + serviciosUsados.length);
+      for (let i = 0; i < serviciosUsados.length; i++) {
+          serviciosUsados[i].service;
+          this.agregarServicio(serviciosUsados[i].service.name);
+          let numS = this.devolverNumeroServicio(serviciosUsados[i].service.name);
+
+          let regla = '-'+ numP + ' ' + numS + ' 0 \n';
+          this.agregarRegla(regla);
+          regla = '-'+ numS + ' ' + numP + ' 0 \n';
+          this.agregarRegla(regla);
+      }
+
+      //Ahora para cada servicio encontrado, lo analizamos...
+      console.log('DESCOMPONIENDO EL USA------>');
+      for (let i = 0; i < serviciosUsados.length; i++) {
+        this.traducirServicio(serviciosUsados[i].service);
+      }
+    }
   }
 
 
   confeccionarStringFinal(){
     //Este metodo va a ser el encargado de armar el string final de CNF.
     //Debera armar la cabecera del archivo y unir las reglas ya creadas.
+
+    let temp = 'p cnf ' + this.servicios.length + ' ' + this.cantidadReglas + '\n';
+    console.log(temp);
+    this.salida = temp + this.stringTemp;
+    console.log(this.salida);
   }
 
 
@@ -171,6 +297,7 @@ export class TranslateComponent implements OnInit {
 
   agregarRegla(regla: string){
     this.stringTemp = this.stringTemp +  regla;
+    this.cantidadReglas ++ ;
   }
 
 }
