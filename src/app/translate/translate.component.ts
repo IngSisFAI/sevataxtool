@@ -98,6 +98,14 @@ export class TranslateComponent implements OnInit {
     if(servicio.uses != null){
       this.traducirUsa(servicio.name,servicio.uses);
     }
+
+    if(servicio.require != null){
+      this.traducirRequire(servicio.name,servicio.require);
+    }
+
+    if(servicio.exclude != null){
+      this.traducirExclude(servicio.name,servicio.exclude);
+    }
     /**
     console.log('el string esta de la siguiente manera..');
     console.log(this.stringTemp);
@@ -283,7 +291,6 @@ export class TranslateComponent implements OnInit {
 
       console.log('Longitud de servicios de USA de: ' + propietario + ' es igual a : ' + serviciosUsados.length);
       for (let i = 0; i < serviciosUsados.length; i++) {
-          serviciosUsados[i].service;
           this.agregarServicio(serviciosUsados[i].service.name);
           let numS = this.devolverNumeroServicio(serviciosUsados[i].service.name);
 
@@ -295,6 +302,60 @@ export class TranslateComponent implements OnInit {
 
       //Ahora para cada servicio encontrado, lo analizamos...
       console.log('DESCOMPONIENDO EL USA------>');
+      for (let i = 0; i < serviciosUsados.length; i++) {
+        this.traducirServicio(serviciosUsados[i].service);
+      }
+    }
+  }
+
+
+  traducirRequire(propietario: string ,serviciosUsados: any){
+    let numP = this.devolverNumeroServicio(propietario);
+    if(serviciosUsados.length == null){
+      //Hay 1 require.
+      this.agregarServicio(serviciosUsados.service.name);
+      let numS = this.devolverNumeroServicio(serviciosUsados.service.name);
+      let regla = '-'+ numP + ' ' + numS + ' 0 \n';
+      this.agregarRegla(regla);
+      this.traducirServicio(serviciosUsados.service); //Traduzco el servicio requerido por si tiene mas cosas.
+    }
+    else{
+      //Hay mas de 1 require.
+      for (let i = 0; i < serviciosUsados.length; i++) {
+          this.agregarServicio(serviciosUsados[i].service.name);
+          let numS = this.devolverNumeroServicio(serviciosUsados[i].service.name);
+
+          let regla = '-'+ numP + ' ' + numS + ' 0 \n';
+          this.agregarRegla(regla);
+      }
+      //Ahora para cada servicio encontrado, lo analizamos...
+      for (let i = 0; i < serviciosUsados.length; i++) {
+        this.traducirServicio(serviciosUsados[i].service);
+      }
+    }
+  }
+
+
+  traducirExclude(propietario: string ,serviciosUsados: any){
+    let numP = this.devolverNumeroServicio(propietario);
+    if(serviciosUsados.length == null){
+      //Hay 1 exclude.
+      this.agregarServicio(serviciosUsados.service.name);
+      let numS = this.devolverNumeroServicio(serviciosUsados.service.name);
+      let regla = '-'+ numP + ' -' + numS + ' 0 \n';
+      this.agregarRegla(regla);
+      this.traducirServicio(serviciosUsados.service); //Traduzco el servicio excluido por si tiene mas cosas.
+    }
+    else{
+      //Hay mas de 1 exclude.
+      for (let i = 0; i < serviciosUsados.length; i++) {
+          this.agregarServicio(serviciosUsados[i].service.name);
+          let numS = this.devolverNumeroServicio(serviciosUsados[i].service.name);
+
+          let regla = '-'+ numP + ' -' + numS + ' 0 \n';
+          this.agregarRegla(regla);
+      }
+      //Ahora para cada servicio encontrado, lo analizamos...
       for (let i = 0; i < serviciosUsados.length; i++) {
         this.traducirServicio(serviciosUsados[i].service);
       }
