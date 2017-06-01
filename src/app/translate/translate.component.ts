@@ -10,6 +10,7 @@ export class TranslateComponent implements OnInit {
   servicios = [];
   cantServ = 0;
   salida: string = "";
+  stringRaices = "";
   stringTemp: string = "";
   cantidadReglas = 0;
 
@@ -25,6 +26,7 @@ export class TranslateComponent implements OnInit {
     this.salida = json;
     this.servicios = [];
     this.cantServ = 1;
+    this.cantidadReglas = 0;
 
 
     let a = JSON.parse(json);
@@ -32,15 +34,30 @@ export class TranslateComponent implements OnInit {
     console.log(a);
     //Agrego el servicio obligatorio del DS a la lista de servicios y ya me queda con el numero 0
     this.servicios.push([this.cantServ,a.Datasheet.id]);
-    this.stringTemp = this.cantServ + ' 0 \n';
+    this.stringRaices = this.cantServ + ' 0 \n';
     this.cantServ++;
 
 
-    //Debo recorrer todo el json en busca de todos los servicios y puntos variantes.
     let ds = a.Datasheet;
+    if (ds.service.length == null){
+      //Esto significa que hay un solo servicio raiz para este DS.
+      //Agrego el servicio raiz del DS al arreglo.
+      this.traducirServicio(ds.service);
+      this.stringRaices = this.stringRaices + '-1 ' + this.devolverNumeroServicio(ds.service.name) + ' 0 \n';
+    }
+    else{
+      //Hay mas de 1 raiz para este DS.
+      for (let i = 0; i < ds.service.length; i++) {
+          this.traducirServicio(ds.service[i]);
+          this.stringRaices = this.stringRaices + '-1 ' + this.devolverNumeroServicio(ds.service[i].name) + ' 0 \n';
 
-    //Agrego el servicio raiz del DS al arreglo.
-    this.traducirServicio(ds.service);
+      }
+    }
+
+
+
+
+
 
     /*for(var atr in ds){
       console.log(atr);
@@ -81,9 +98,11 @@ export class TranslateComponent implements OnInit {
     if(servicio.uses != null){
       this.traducirUsa(servicio.name,servicio.uses);
     }
-
+    /**
     console.log('el string esta de la siguiente manera..');
     console.log(this.stringTemp);
+
+    */
   }
 
   traducirPuntoEspecifico(propietario: string ,punto: any){
@@ -168,6 +187,8 @@ export class TranslateComponent implements OnInit {
     console.log('Mis ServRel son: '+ serviciosRel);
     let serviciosHijos = [];
     let numP = this.devolverNumeroServicio(propietario);
+
+    //Agrego todos los servicios hijos del punto variante alternativo al arreglo de servicios conocidos.
     for (let i = 0; i < serviciosRel.length; i++) {
       console.log('La longitud de hijos es de: ' + serviciosRel.length);
       this.agregarServicio(serviciosRel[i].name);
@@ -175,9 +196,14 @@ export class TranslateComponent implements OnInit {
       console.log('el numero del servicio ' + serviciosRel[i].name + '  es:  '+  numS);
       serviciosHijos.push(numS);
     }
+
+
     console.log('Alternativo, Soy: '+ propietario + '  con mi numero: ' + numP);
     console.log("Y mis servicios hijos son: " + serviciosHijos);
 
+
+    //Aca armo la regla de todos los hijos positivos.
+    //Ejemplo -1 2 3 4 0 , donde 1 es el servicio con el punto variante alternativo.
     let regla = '';
     regla = '-' + numP;
     for (let i = 0; i < serviciosHijos.length; i++) {
@@ -186,6 +212,8 @@ export class TranslateComponent implements OnInit {
     regla = regla + ' 0 \n';
     console.log('1º Regla alternativa: ' + regla);
     this.agregarRegla(regla);
+
+
 
     //Reinicio la variable Regla temporal.
     regla = '';
@@ -210,7 +238,7 @@ export class TranslateComponent implements OnInit {
     /** REVISAR CUANDO LA CANTIDAD DE HIJOS ES 2 O MAS DE 3!!! HARDCODEADO PARA 3 SOLAMENTE */
     regla = '';
     for (let i = 0; i < serviciosHijos.length; i++) {
-      if(i==(serviciosHijos.length-1)){
+      if(i==(serviciosHijos.length-1) && (serviciosHijos.length!=2)){
         regla = '-'+serviciosHijos[i] + ' -'+serviciosHijos[0] + ' 0 \n';
         console.log('Regla giratoria del alternativo...');
       }
@@ -280,7 +308,7 @@ export class TranslateComponent implements OnInit {
 
     let temp = 'p cnf ' + this.servicios.length + ' ' + this.cantidadReglas + '\n';
     console.log(temp);
-    this.salida = temp + this.stringTemp;
+    this.salida = temp +  this.stringRaices + this.stringTemp;
     console.log(this.salida);
   }
 
