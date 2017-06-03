@@ -6,7 +6,7 @@
     <p></p>
     <div class="form-group">
       <label for="json">Ingrese el JSON:</label>
-      <textarea class="form-control" rows="5" id="json" #json>{
+      <textarea class="form-control" rows="25" id="json" #json>{
         "Datasheet": {
           "id": "service functionalityError1",
           "service": {
@@ -104,12 +104,14 @@
         }
       }
     </textarea>
-    <button type="button" name="button" class="btn btn-success"  (click)="traducirJson(json.value)">Aceptar</button>
+    <div class="wrapper">
+      <button type="button" name="button" class="btn btn-success" id="boton" #boton (click)="traducirJson(json.value)">Traducir</button>
+    </div>
   </div>
 </div>
 <hr>
 <div class="col-xs-10">
   <h1>Salida de datos</h1>
-  <pre>{{salida}}</pre>
+  <pre id="mycnf">{{salida}}</pre>
 </div>
 </div>

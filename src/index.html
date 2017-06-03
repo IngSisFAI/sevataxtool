@@ -7,8 +7,56 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+  #output
+  {
+      padding: 1px;           /*To make sure that the input and the label will not overlap the border, If you remove this line it will not display correctly on Opera 15.0*/
+      border: 1px solid activeborder; /*Create our fake border :D*/
+      background-color: black;
+      font-family:monospace;
+      color: white;
+  }
+  #solve{
+   width:100px;
+   position:relative;
+   top:100%;
+   left:40%;
+  }
+  </style>
+  <script type='text/javascript' src="assets/jquery.js"></script>
+
 </head>
 <body>
   <app-root>Loading...</app-root>
+
+
+
+<script>
+  var Module = {
+    noInitialRun : true,
+    'print': function(text) {
+        var element = document.getElementById('output');
+        element.innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
+        //console.log(text);
+    }
+  };
+  </script>
+  <script type='text/javascript' src="assets/minisat.js"></script>
+
+  <div class="wrapper">
+    <button id="solve" class="btn btn-success">Resolver!</button>
+  </div>
+
+  <script type='text/javascript'>
+  $("#solve").click(function() {
+    var element = document.getElementById('output');
+    element.innerHTML = "";
+    htmlstuff = Module.cwrap('htmlstuff_c', 'int', ['string']);
+    a = htmlstuff(document.getElementById("mycnf").innerText);
+  });
+  </script>
+
+  <div class="col-xs-10" id="output"></div>
 </body>
 </html>

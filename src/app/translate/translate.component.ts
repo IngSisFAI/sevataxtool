@@ -27,6 +27,8 @@ export class TranslateComponent implements OnInit {
     this.servicios = [];
     this.cantServ = 1;
     this.cantidadReglas = 0;
+    this.stringRaices = "";
+    this.stringTemp = "";
 
 
     let a = JSON.parse(json);
