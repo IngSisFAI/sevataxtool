@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { TranslateComponent } from './translate/translate.component';
 import { VisualComponent } from './visual/visual.component';
+import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     TranslateComponent,
-    VisualComponent
+    VisualComponent,
+    StrategyCNFComponent
   ],
   imports: [
     BrowserModule,

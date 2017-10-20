@@ -55,12 +55,6 @@ export class TranslateComponent implements OnInit {
 
       }
     }
-
-
-
-
-
-
     /*for(var atr in ds){
       console.log(atr);
       var nombreAtr = ds[atr];
@@ -83,6 +77,7 @@ export class TranslateComponent implements OnInit {
       this.cantServ++;
     }
   }
+
 
   traducirServicio(servicio: any){
 
