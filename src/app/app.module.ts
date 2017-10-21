@@ -22,7 +22,7 @@ import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.comp
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [StrategyCNFComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
