@@ -1,7 +1,10 @@
+import { Builder } from './builder';
+
 export interface Strategy {
 
  // TODO: agregar la relacion con el BUILDER (hay que crear una interface para dicho builder)
 
+  builder:Builder; //El constructor asociado a esta estrategia.
 
   servicios: any[]; // Arreglo que almacena el conjunto de servicios de la forma (nombreServicio, idServicio)
   stringRaices:string; //String encargado de mantener la numeracion de cada servicio
@@ -30,8 +33,7 @@ export interface Strategy {
   //metodos Auxiliares
   devolverNumeroServicio(nombre:string): number; //Metodo que busca en el arreglo de servicios, el servicio con name=nombre, y devuelve el numero asignado.
 
-  agregarRegla(regla: string): void; //Metodo que se encarga de agregar al string final los resultados de los metodos traductores.
 
-
-  confeccionarStringFinal():void;
+  //Metodos de comunicacion
+  agregarRegla(regla: string): void; //Metodo que se encarga de transpasarle la responsabilidad al builder
 }

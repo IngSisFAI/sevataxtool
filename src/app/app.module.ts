@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { TranslateComponent } from './translate/translate.component';
 import { VisualComponent } from './visual/visual.component';
 import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.component';
+import { BuilderSATComponent } from './translate/builder-sat/builder-sat.component';
+import { DocumentSATComponent } from './translate/document-sat/document-sat.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +17,16 @@ import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.comp
     HeaderComponent,
     TranslateComponent,
     VisualComponent,
-    StrategyCNFComponent
+    StrategyCNFComponent,
+    BuilderSATComponent,
+    DocumentSATComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [StrategyCNFComponent],
+  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

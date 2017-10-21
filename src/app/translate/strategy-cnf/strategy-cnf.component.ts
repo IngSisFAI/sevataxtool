@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Strategy } from '../../interfaces/strategy';
 
+import { BuilderSATComponent } from '../builder-sat/builder-sat.component';
 @Component({
   selector: 'app-strategy-cnf',
   templateUrl: './strategy-cnf.component.html',
   styleUrls: ['./strategy-cnf.component.css']
 })
-export class StrategyCNFComponent implements OnInit {
+export class StrategyCNFComponent implements OnInit,Strategy {
 
+
+
+    builder:BuilderSATComponent;
 
     servicios = [];
     cantServ = 0;
@@ -15,7 +20,8 @@ export class StrategyCNFComponent implements OnInit {
     stringTemp: string = "";
     cantidadReglas = 0;
 
-    constructor() {
+    constructor(builder:BuilderSATComponent) {
+      this.builder = builder;
       this.salida = "nada";
     }
 
@@ -42,17 +48,20 @@ export class StrategyCNFComponent implements OnInit {
 
 
       let ds = a.Datasheet;
+      let numeroServicio;
       if (ds.service.length == null){
         //Esto significa que hay un solo servicio raiz para este DS.
         //Agrego el servicio raiz del DS al arreglo.
         this.traducirServicio(ds.service);
-        this.stringRaices = this.stringRaices + '-1 ' + this.devolverNumeroServicio(ds.service.name) + ' 0 \n';
+        numeroServicio = this.devolverNumeroServicio(ds.service.name);
+        this.stringRaices = this.stringRaices + '-1 ' + numeroServicio + ' 0 \n';
       }
       else{
         //Hay mas de 1 raiz para este DS.
         for (let i = 0; i < ds.service.length; i++) {
             this.traducirServicio(ds.service[i]);
-            this.stringRaices = this.stringRaices + '-1 ' + this.devolverNumeroServicio(ds.service[i].name) + ' 0 \n';
+            numeroServicio = this.devolverNumeroServicio(ds.service[i].name);
+            this.stringRaices = this.stringRaices + '-1 ' + numeroServicio + ' 0 \n';
 
         }
       }
@@ -175,7 +184,7 @@ export class StrategyCNFComponent implements OnInit {
 
     traducirOpcional(propietario: string ,serviciosRel: any){
       console.log('ENTRE A TRADUCIR OPCIONAL....... para el servicio: ' + propietario);
-      console.log('Mis ServRel son: '+ serviciosRel.service);
+      console.log('Mis ServRel son: '+ serviciosRel);
       let numP = this.devolverNumeroServicio(propietario);
       for (let i = 0; i < serviciosRel.length; i++) {
           this.agregarServicio(serviciosRel[i].name);
@@ -365,11 +374,13 @@ export class StrategyCNFComponent implements OnInit {
       //Este metodo va a ser el encargado de armar el string final de CNF.
       //Debera armar la cabecera del archivo y unir las reglas ya creadas.
 
-      let temp = 'p cnf ' + this.servicios.length + ' ' + this.cantidadReglas + '\n';
-      console.log(temp);
-      this.salida = temp +  this.stringRaices + this.stringTemp;
-      console.log(this.salida);
-      return this.salida;
+      // let temp = 'p cnf ' + this.servicios.length + ' ' + this.cantidadReglas + '\n';
+      // let cabecera = this.builder.confeccionarCabecera(this.servicios.length);
+      // console.log(temp);
+      // this.salida = temp +  this.stringRaices + this.stringTemp;
+
+
+      return this.builder.finalizarCreacionDocumento(this.servicios.length,this.stringRaices);;
     }
 
 
@@ -384,7 +395,6 @@ export class StrategyCNFComponent implements OnInit {
     }
 
     agregarRegla(regla: string){
-      this.stringTemp = this.stringTemp +  regla;
-      this.cantidadReglas ++ ;
+      this.builder.agregarRegla(regla); //Transferimos la responsabilidad al builder.
     }
 }
