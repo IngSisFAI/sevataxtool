@@ -30,7 +30,7 @@ export class StrategyUsComponent implements OnInit {
 
     if(json.Datasheet){
       let ds = new Datasheet();
-      ds.setName = json.Datasheet.id;
+      ds.setName(json.Datasheet.id);
       this.datasheetsJson.push(ds); //Agregamos el nuevo datasheet al arreglo de la estructura
 
       if(json.Datasheet.service){
@@ -43,7 +43,12 @@ export class StrategyUsComponent implements OnInit {
         //Si existe un servicio en ese Datasheet, lo  recorremos.
         this.traducirServicio(json.Datasheet.service);
       }
+
+      console.log("########################## Traduccion Finalizada ################");
+      console.log(ds);
     }
+
+
   }
 
   public traducirServicio(servicioJson){
@@ -169,35 +174,52 @@ export class StrategyUsComponent implements OnInit {
 
 
 
-  private crearDependency(type:string, servicesRel):Dependency{
+  private crearDependency(type:string, serviceRel):Dependency{
     let dependency:Dependency;
 
-    if(servicesRel.length == null){
-      //ESTO SIGNIFICA QUE ES SOLO 1 EL SERVICIO USADO.
-      dependency = new Dependency();
-      dependency.setDependencyType(type);
-      dependency.setService(servicesRel.service)
-    }
 
-    //Agregamos los servicios relacionados.
-    for (let i = 0; i < servicesRel.length; i++) {
-        let service = this.crearServicio(servicesRel[i].service);
+    dependency = new Dependency();
+    dependency.setDependencyType(type);
+    let service = this.crearServicio(serviceRel.service);
+    dependency.setService(service)
 
-    }
 
     return dependency;
   }
 
+  private traducirDependency(propietario:string,type:string,serviciosRel){
+    if(serviciosRel.length == null){
+      //esto significa que es solo 1 servicio relacioando para este tipo.
+      let dp = this.crearDependency(type,serviciosRel);
+      let sv = this.buscarServicio(propietario);
+      sv.addDependecy(dp);
+    }
+    else{
+      //esto significa que es mas de 1 relacion del mismo tipo.
+      for (let i = 0; i < serviciosRel.length; i++) {
+        let dp = this.crearDependency(type,serviciosRel[i]);
+        let sv = this.buscarServicio(propietario);
+        sv.addDependecy(dp);
+      }
+    }
+
+    //Ahora para cada servicio encontrado, lo analizamos...
+    console.log('DESCOMPONIENDO EL ',type, ' ------>');
+    for (let i = 0; i < serviciosRel.length; i++) {
+      this.traducirServicio(serviciosRel[i].service);
+    }
+  }
+
   traducirUsa(propietario: string ,serviciosRel: any){
-    
+    this.traducirDependency(propietario,'Use',serviciosRel);
   }
 
   traducirRequire(propietario: string ,serviciosRel: any){
-
+    this.traducirDependency(propietario,'Require',serviciosRel);
   }
 
   traducirExclude(propietario: string ,serviciosRel: any){
-
+    this.traducirDependency(propietario,'Exclude',serviciosRel);
   }
 
 
