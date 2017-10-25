@@ -10,6 +10,7 @@ import { VisualComponent } from './visual/visual.component';
 import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.component';
 import { BuilderSATComponent } from './translate/builder-sat/builder-sat.component';
 import { DocumentSATComponent } from './translate/document-sat/document-sat.component';
+import { StrategyUsComponent } from './translate/strategy-us/strategy-us.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +20,15 @@ import { DocumentSATComponent } from './translate/document-sat/document-sat.comp
     VisualComponent,
     StrategyCNFComponent,
     BuilderSATComponent,
-    DocumentSATComponent
+    DocumentSATComponent,
+    StrategyUsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent],
+  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent,StrategyUsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

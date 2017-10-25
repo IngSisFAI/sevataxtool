@@ -10,7 +10,6 @@ import { BuilderSATComponent } from '../builder-sat/builder-sat.component';
 export class StrategyCNFComponent implements OnInit,Strategy {
 
 
-
     builder:BuilderSATComponent;
 
     servicios = [];
