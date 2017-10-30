@@ -378,12 +378,20 @@ export class StrategyCNFComponent implements OnInit,Strategy {
       // console.log(temp);
       // this.salida = temp +  this.stringRaices + this.stringTemp;
 
-
-      return this.builder.finalizarCreacionDocumento(this.servicios.length,this.stringRaices);;
+      this.salida = this.builder.finalizarCreacionDocumento(this.servicios.length,this.stringRaices);
+      return this.salida;
     }
 
+    public obtenerSalida(){
+      return this.salida;
+    }
 
-    devolverNumeroServicio(nombre:string){
+    // public obtenerCabecera(){
+    //
+    // }
+
+
+    public devolverNumeroServicio(nombre:string){
       //Metodo que busca en el arreglo de servicios, el servicio con name=nombre, y devuelve el numero asignado.
       let resultado = -1;
       let serv = this.servicios.find(x=> x[1] === nombre); //Busco el servicio en el arreglo para conocer su numero

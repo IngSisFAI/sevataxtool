@@ -11,6 +11,7 @@ import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.comp
 import { BuilderSATComponent } from './translate/builder-sat/builder-sat.component';
 import { DocumentSATComponent } from './translate/document-sat/document-sat.component';
 import { StrategyUsComponent } from './translate/strategy-us/strategy-us.component';
+import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StrategyUsComponent } from './translate/strategy-us/strategy-us.compone
     StrategyCNFComponent,
     BuilderSATComponent,
     DocumentSATComponent,
-    StrategyUsComponent
+    StrategyUsComponent,
+    SolverScenariosComponent
   ],
   imports: [
     BrowserModule,
