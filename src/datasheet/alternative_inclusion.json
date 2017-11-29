@@ -1,0 +1,97 @@
+{
+  "Datasheet": {
+    "id": "service functionalityError1",
+    "service": {
+      "name": "PG.1",
+      "GlobalVariationPoint": {
+        "AlternativeVP": {
+          "service": [
+            { "name": "MM.13" },
+            {
+              "name": "MM.10",
+              "GlobalVariationPoint": {
+                "AlternativeVP": {
+                  "service": [
+                    {
+                      "name": "HI.13",
+                      "GlobalVariationPoint": {
+                        "MandatoryVP": {
+                          "service": [
+                            {
+                              "name": "MM.7",
+                              "uses": {
+                                "service": { "name": "MM.13" }
+                              }
+                            },
+                            {
+                              "name": "MM.2",
+                              "GlobalVariationPoint": {
+                                "AlternativeVP": {
+                                  "service": [
+                                    { "name": "HI.16" },
+                                    {
+                                      "name": "MM.11",
+                                      "uses": {
+                                        "service": { "name": "HI.6" }
+                                      }
+                                    },
+                                    {
+                                      "name": "PG.5",
+                                      "uses": [
+                                        {
+                                          "service": {
+                                            "name": "HI.7",
+                                            "GlobalVariationPoint": {
+                                              "MandatoryVP": {
+                                                "service": [
+                                                  {
+                                                    "name": "PG.6",
+                                                    "uses": {
+                                                      "service": { "name": "HI.1" }
+                                                    }
+                                                  },
+                                                  {
+                                                    "name": "HI.2",
+                                                    "uses": {
+                                                      "service": { "name": "MM.12" }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "uses": {
+                                              "service": { "name": "PG.8" }
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "service": { "name": "MM.9" }
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "uses": {
+                                "service": { "name": "MM.8" }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    { "name": "MM.4" },
+                    { "name": "HI.11" }
+                  ]
+                }
+              },
+              "exclude": {
+                "service": { "name": "MM.13" }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

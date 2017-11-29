@@ -13,6 +13,7 @@ import {VariantPoint} from '../../clases/VariantPoint';
 export class StrategyUsComponent implements OnInit {
 
   private datasheetsJson:Datasheet[] = [];
+
   private listServices:Service[] = [];
 
   constructor() { }
@@ -33,6 +34,8 @@ export class StrategyUsComponent implements OnInit {
       ds.setName(json.Datasheet.id);
       this.datasheetsJson.push(ds); //Agregamos el nuevo datasheet al arreglo de la estructura
 
+
+
       if(json.Datasheet.service){
         //TODO: En este caso estoy tomando que un DS tiene solo 1 servicio! Hacer el generico!
 
@@ -46,6 +49,7 @@ export class StrategyUsComponent implements OnInit {
 
       console.log("########################## Traduccion Finalizada ################");
       console.log(ds);
+      return ds;
     }
 
 

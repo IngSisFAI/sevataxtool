@@ -11,6 +11,7 @@ import { StrategyCNFComponent } from './translate/strategy-cnf/strategy-cnf.comp
 import { BuilderSATComponent } from './translate/builder-sat/builder-sat.component';
 import { DocumentSATComponent } from './translate/document-sat/document-sat.component';
 import { StrategyUsComponent } from './translate/strategy-us/strategy-us.component';
+import { StrategySOLVERComponent } from './translate/strategy-solver/strategy-solver.component';
 import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.co
     BuilderSATComponent,
     DocumentSATComponent,
     StrategyUsComponent,
+    StrategySOLVERComponent,
     SolverScenariosComponent
   ],
   imports: [
@@ -30,7 +32,7 @@ import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.co
     FormsModule,
     HttpModule
   ],
-  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent,StrategyUsComponent],
+  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent,StrategyUsComponent,StrategySOLVERComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

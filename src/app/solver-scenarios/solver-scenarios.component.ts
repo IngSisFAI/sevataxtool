@@ -4,6 +4,7 @@ import { Datasheet } from '../clases/Datasheet';
 import { Service } from '../clases/Service';
 import { StrategyCNFComponent } from '../translate/strategy-cnf/strategy-cnf.component';
 import { StrategyUsComponent } from '../translate/strategy-us/strategy-us.component';
+import { TranslateComponent} from '../translate/translate.component';
 
 
 
@@ -20,8 +21,9 @@ export class SolverScenariosComponent implements OnInit {
   public cantReglas;
   public stringReglas;
   public traduccionCNF;
+  public outResults;
 
-  constructor(private strategyCnf: StrategyCNFComponent, private strategyUsComponent:StrategyUsComponent) { }
+  constructor(private strategyCnf: StrategyCNFComponent, private strategyUsComponent:StrategyUsComponent,private trasnlateComponent:TranslateComponent) { }
 
   ngOnInit() {
     //Cabecera.
@@ -30,9 +32,6 @@ export class SolverScenariosComponent implements OnInit {
     // Reglas.
     // Traduccion.
     //Underline.
-
-
-
 
   }
 
@@ -101,6 +100,30 @@ export class SolverScenariosComponent implements OnInit {
 
   }
 
+
+  public analyse_FalseOptional(){
+
+
+    var StrcUnder = this.trasnlateComponent.getStructureUnderlying();
+    StrcUnder.getServices();
+
+  }
+
+
+  public analyse_self_dependency(){
+
+    this.outResults = "";
+    var StrcUnder = this.trasnlateComponent.getStructureUnderlying();
+    var services = StrcUnder.getServices();
+
+    for (let i = 0; i < services.length; i++) {
+      this.gs_me_SelfDependency(services[i])
+    }
+    return this.outResults;
+  }
+
+
+
   public gs_me_FalseOptional(service:Service){
    //TODO: Traer la traduccion CNF aqui.
    //TODO: Buscar el numero del servicio en CNF, negarlo y evaluar
@@ -118,12 +141,23 @@ export class SolverScenariosComponent implements OnInit {
 
     for (let i = 0; i < dependencies.length; i++) {
         let sv = dependencies[i].getService();
+
         let nombreAux = sv.getName();
+
         if(nombre == nombreAux ){
+
           console.log("el servicio ", nombre , " tiene una SelfDependency!!! \0");
+          this.outResults = this.outResults + " '\n'" + "el servicio "+ nombre + " tiene una SelfDependency!!! \0";
+
+        }else {
+          this.gs_me_SelfDependency(sv)
         }
+
+
     }
 
+
   }
+
 
 }

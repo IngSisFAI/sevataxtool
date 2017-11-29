@@ -1,12 +1,13 @@
 <div class="row">
-  <div class="col-xs-10">
+  <div class="col-xs-12">
     <h1>Ingreso de datos</h1>
 
 
     <p></p>
-    <div class="form-group">
+    <div class="row">
+    <div class="form-group col-sm-6">
       <label for="json">Ingrese el JSON:</label>
-      <textarea class="form-control" rows="25" id="json" #json>{
+      <textarea class="form-control" rows="15" id="json" #json>{
         "Datasheet": {
           "id": "service functionalityError1",
           "service": {
@@ -104,15 +105,66 @@
         }
       }
     </textarea>
-    <div class="wrapper">
-      <button type="button" name="button" class="btn btn-success" id="boton" #boton (click)="traducirJson(json.value)">Traducir</button>
-      <button type="button" name="button" class="btn btn-info" id="boton2" #boton2 (click)="generarEstructura(json.value)">Generar Estructura</button>
+      <hr>
+
+
+  </div>
+    <div class="form-group col-sm-3">
+      <label for="json">Taducciones:</label>
+      <div class="wrapper">
+
+        <button type="button" name="button" class="btn btn-sm btn-success col-sm-12" id="boton" #boton (click)="traducirJson(json.value)">Traducir CNF </button>
+
+
+        <button type="button" name="button" class="btn btn-sm btn-success col-sm-12" id="boton2" #boton2 (click)="generarEstructura(json.value)">Generar Estructura</button>
+
+      </div>
+      <div class="col-sm-12">
+      <label for="json">Casos de Test:</label>
+      </div>
+      <h5 class="col-sm-12">Model Errors</h5>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                id="boton_test_1" #boton (click)="analyse_FalseOptional(json.value)">Falsos Opcionales</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                id="boton_test_2" #botont (click)="analyse_self_dependency_bt()">Self Dependecy</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                id="boton_test_3" #botont (click)="generarEstructura(json.value)">VP Violations</button>
+      <hr>
+      <h5 class="col-sm-12">Scope Scenarios</h5>
+      <h5 class="col-sm-12">CDS</h5>
+
+      </div>
+    <div class="form-group col-sm-3">
+      <h5 class="col-sm-12">Dead Services</h5>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_4" #boton (click)="generarEstructura(json.value)">Constraint Contradition</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_5" #botont (click)="alternative_inclusion_bt()">Alternative Inclusion</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_6" #botont (click)="generarEstructura(json.value)">Mandatory Exclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_7" #botont (click)="parent_exclusion_bt()">Parent Exclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_8" #botont (click)="generarEstructura(json.value)">Transitive Inconsistency </button>
+      <h5 class="col-sm-12">Redundancies</h5>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_9" #botont (click)="generarEstructura(json.value)">Mandatory Inclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_10" #botont (click)="parent_inclusion_bt()">Parent Inclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_11" #botont (click)="alternative_inclusion_bt()">Alternative Exclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_12" #botont (click)="generarEstructura(json.value)">Transitive Redundancy </button>
+
+
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-10">
+        <h1>Salida de datos</h1>
+        <pre id="mycnf">{{salida}}</pre>
+      </div>
     </div>
   </div>
-</div>
-<hr>
-<div class="col-xs-10">
-  <h1>Salida de datos</h1>
-  <pre id="mycnf">{{salida}}</pre>
-</div>
+
 </div>
