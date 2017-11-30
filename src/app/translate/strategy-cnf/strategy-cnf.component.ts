@@ -218,6 +218,8 @@ export class StrategyCNFComponent implements OnInit,Strategy {
 
       //Aca armo la regla de todos los hijos positivos.
       //Ejemplo -1 2 3 4 0 , donde 1 es el servicio con el punto variante alternativo.
+      console.log('DALE PAPA1º Regla alternativa: ');
+
       let regla = '';
       regla = '-' + numP;
       for (let i = 0; i < serviciosHijos.length; i++) {
@@ -225,13 +227,30 @@ export class StrategyCNFComponent implements OnInit,Strategy {
       }
       regla = regla + ' 0 \n';
       console.log('1º Regla alternativa: ' + regla);
+      // -padre -> hijos (positivos )
+      // -2 3 4 0
+
       this.agregarRegla(regla);
 
 
 
       //Reinicio la variable Regla temporal.
-      regla = '';
+
+      regla = '-' + numP;
       //A continuacion agregaremos las reglas de solo 1 positvo.
+      if (serviciosHijos.length ==2){
+        for (let i = 0; i < serviciosHijos.length; i++) {
+          regla = regla + ' -' + serviciosHijos[i];
+        }
+        regla = regla + ' 0 \n';
+        console.log('1º Regla alternativa: ' + regla);
+        // -padre -> hijos (negativos )
+        // -2 -3 -4 0
+        this.agregarRegla(regla);
+      }
+
+
+      if (serviciosHijos.length >2){
       for (let i = 0; i < serviciosHijos.length; i++) {
         regla = '-' + numP;
         for (let j = 0; j < serviciosHijos.length; j++) {
@@ -247,10 +266,12 @@ export class StrategyCNFComponent implements OnInit,Strategy {
         console.log(i+'º Regla alternativa: ' + regla);
         this.agregarRegla(regla);
       }
+      }
 
       //Ahora debemos agregar las combinaciones de los hijos.
       /** REVISAR CUANDO LA CANTIDAD DE HIJOS ES 2 O MAS DE 3!!! HARDCODEADO PARA 3 SOLAMENTE */
       regla = '';
+      if (serviciosHijos.length >2){
       for (let i = 0; i < serviciosHijos.length; i++) {
         if(i==(serviciosHijos.length-1) && (serviciosHijos.length!=2)){
           regla = '-'+serviciosHijos[i] + ' -'+serviciosHijos[0] + ' 0 \n';
@@ -261,9 +282,27 @@ export class StrategyCNFComponent implements OnInit,Strategy {
         }
 
         console.log('Regla combinatoria... : ' + regla);
+        console.log('Regla XXXXXXXXXXXX... : ' + regla);
         this.agregarRegla(regla);
         regla = ''; //Limpio la regla por las dudas...
       }
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
