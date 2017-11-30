@@ -30,20 +30,25 @@ export class TranslateComponent implements OnInit {
     this.salida = this.strategySOLVER.analyse_self_dependency(this.structureUnderlying);
   }
   public constraint_contradition_bt(){
+    this.salida ="";
     this.salida = this.strategySOLVER.analyse_constraint_contradition();
   }
   public alternative_inclusion_bt(){
+    this.salida ="";
     this.salida = this.strategySOLVER.analyse_alternative_inclusion(this.structureUnderlying);
   }
   public parent_exclusion_bt(){
+    this.salida ="";
     this.salida = this.strategySOLVER.analyse_parent_exclusion(this.structureUnderlying);
   }
   public parent_inclusion_bt(){
+    this.salida ="";
     this.salida = this.strategySOLVER.analyse_parent_inclusion(this.structureUnderlying);
   }
 
   traducirJson(json){
     this.strategyCnf.traducirJson(json);
+    this.salida ="";
     this.salida=this.strategyCnf.confeccionarStringFinal();
   }
   public getStructureUnderlying(){
