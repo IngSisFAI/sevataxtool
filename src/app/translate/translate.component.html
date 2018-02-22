@@ -7,7 +7,30 @@
     <div class="row">
     <div class="form-group col-sm-6">
       <label for="json">Datasheet JSON:</label>
-      <textarea class="form-control" rows="15" id="json" #json>{
+      <textarea class="form-control" rows="15" id="json" #json>
+ {
+  "Datasheet": {
+    "id": "service functionalityError1",
+    "service": {
+      "name": "PG.1",
+      "GlobalVariationPoint": {
+        "AlternativeVP": {
+          "service": [
+            { "name": "MM.13" ,
+              "require": {
+                "service": [ { "name": "MM.4" } , { "name": "HI.11" }  ]
+              }
+            },
+            {  "name": "MM.10"   }
+          ]
+        }
+      }
+    }
+  }
+}
+
+        </textarea>
+      <textarea class=" hidden form-control" rows="15" >{
         "Datasheet": {
           "id": "service functionalityError1",
           "service": {
@@ -128,7 +151,7 @@
       </div>
       <h5 class="col-sm-12">Model Errors</h5>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_1" #boton (click)="analyse_FalseOptional(json.value)">Falsos Opcionales</button>
+              id="boton_test_1" #boton (click)="analyse_False_Optional_bt()">Falsos Opcionales</button>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
               id="boton_test_2" #botont (click)="analyse_self_dependency_bt()">Self Dependecy</button>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
@@ -136,42 +159,56 @@
       <hr>
       <h5 class="col-sm-12">Scope Scenarios</h5>
       <h5 class="col-sm-12">CDS</h5>
-      <h5 class="col-sm-12">Dead Services</h5>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_4" #boton (click)="generarEstructura(json.value)">Constraint Contradition</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_5" #botont (click)="alternative_inclusion_bt()">Alternative Inclusion</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_6" #botont (click)="generarEstructura(json.value)">Mandatory Exclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_7" #botont (click)="parent_exclusion_bt()">Parent Exclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_8" #botont (click)="generarEstructura(json.value)">Transitive Inconsistency </button>
+
 
 
 
     </div>
     <div class="form-group col-sm-2">
 
+      <h5 class="col-sm-12">Dead Services</h5>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_4" #boton (click)="constraint_contradition_bt()">Constraint Contradition</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_5" #botont (click)="alternative_inclusion_bt()">Alternative Inclusion</button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_6" #botont (click)="mandatory_exclusion_bt()">Mandatory Exclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_7" #botont (click)="parent_exclusion_bt()">Parent Exclusion </button>
+      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+              id="boton_test_8" #botont (click)="transitive_inconsistency_bt()">Transitive Inconsistency </button>
       <h5 class="col-sm-12">Redundancies</h5>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_9" #botont (click)="generarEstructura(json.value)">Mandatory Inclusion </button>
+              id="boton_test_9" #botont (click)="mandatory_inclusion_bt()">Mandatory Inclusion </button>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
               id="boton_test_10" #botont (click)="parent_inclusion_bt()">Parent Inclusion </button>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
               id="boton_test_11" #botont (click)="alternative_inclusion_bt()">Alternative Exclusion </button>
       <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_12" #botont (click)="generarEstructura(json.value)">Transitive Redundancy </button>
+              id="boton_test_12" #botont (click)="transitive_redundancy_bt()">Transitive Redundancy </button>
 
 
     </div>
     </div>
     <div class="row">
-      <div class="col-xs-10">
+      <div class="col-xs-4">
         <h1>Data Output</h1>
         <pre id="mycnf">{{salida}}</pre>
       </div>
+      <div class="col-xs-4">
+        <h1>Pre- Results</h1>
+        <button type="button" name="button" class="btn btn-sm btn-info col-sm-3"
+                id="boton_load" #botont (click)="load_cnf()"> Load CNF </button>
+
+        <textarea [(ngModel)]="preResultados" rows="4" cols="50">{{preResultados}}</textarea>
+      </div>
+      <div class="col-xs-4">
+        <h1>Results</h1>
+        <pre id="myresults">{{resultados}}</pre>
+      </div>
+
     </div>
   </div>
+
 
 </div>

@@ -38,6 +38,7 @@
     'print': function(text) {
         var element = document.getElementById('output');
         element.innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
+
         //console.log(text);
     }
   };
@@ -45,7 +46,7 @@
   <script type='text/javascript' src="assets/minisat.js"></script>
 
   <div class="wrapper">
-    <button id="solve" class="btn btn-success">Resolver!</button>
+    <button id="solve" class="btn btn-success">SAT SOLVER</button>
   </div>
 
   <script type='text/javascript'>
@@ -57,6 +58,9 @@
   });
   </script>
 
-  <div class="col-xs-10" id="output"></div>
+  <div class="col-xs-6" id="output"></div>
+
+
+
 </body>
 </html>

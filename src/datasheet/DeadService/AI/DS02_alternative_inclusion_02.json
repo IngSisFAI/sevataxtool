@@ -1,0 +1,36 @@
+{
+  "Datasheet": {
+    "id": "service functionalityError1",
+    "service": {
+      "name": "PG.1",
+      "GlobalVariationPoint": {
+        "AlternativeVP": {
+          "service": [
+            { "name": "MM.13" },
+            {
+              "name": "MM.10",
+              "GlobalVariationPoint": {
+                "AlternativeVP": {
+                  "service": [
+                    {
+                      "name": "HI.13",
+                      "require": {
+                        "service": {
+                          "name": "MM.13"
+                        }
+                      }
+
+                    },
+                    { "name": "MM.4" },
+                    { "name": "HI.11" }
+                  ]
+                }
+              }
+
+            }
+          ]
+        }
+      }
+    }
+  }
+}

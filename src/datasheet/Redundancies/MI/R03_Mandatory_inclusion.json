@@ -4,7 +4,7 @@
     "service": {
       "name": "PG.1",
       "GlobalVariationPoint": {
-        "AlternativeVP": {
+        "OptionalVP": {
           "service": [
             { "name": "MM.13" },
             {
@@ -19,8 +19,8 @@
                           "service": [
                             {
                               "name": "MM.7",
-                              "uses": {
-                                "service": { "name": "MM.13" }
+                              "require": {
+                                "service": { "name": "MM.2" }
                               }
                             },
                             {
@@ -85,8 +85,8 @@
                   ]
                 }
               },
-              "exclude": {
-                "service": { "name": "MM.13" }
+              "uses": {
+                "service": { "name": "HI.10" }
               }
             }
           ]

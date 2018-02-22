@@ -75,6 +75,7 @@ export class StrategyUsComponent implements OnInit {
     }
 
     if(servicioJson.require != null){
+      console.log("########################## Traduccion REQUIRE ################");
       this.traducirRequire(servicioJson.name,servicioJson.require);
     }
 
@@ -192,13 +193,24 @@ export class StrategyUsComponent implements OnInit {
   }
 
   private traducirDependency(propietario:string,type:string,serviciosRel){
+    console.log("########################## REQUIRE 2 ################");
+
     if(serviciosRel.length == null){
+
       //esto significa que es solo 1 servicio relacioando para este tipo.
+
+      console.log("########################## REQUIRE 3 - 1 ################");
+      console.log(type);
+      console.log(serviciosRel);
+      console.log(propietario);
+      console.log("########################## REQUIRE 3 - 1 ################");
+
       let dp = this.crearDependency(type,serviciosRel);
       let sv = this.buscarServicio(propietario);
       sv.addDependecy(dp);
     }
     else{
+      console.log("########################## REQUIRE 3 - 2 ################");
       //esto significa que es mas de 1 relacion del mismo tipo.
       for (let i = 0; i < serviciosRel.length; i++) {
         let dp = this.crearDependency(type,serviciosRel[i]);
@@ -209,7 +221,9 @@ export class StrategyUsComponent implements OnInit {
 
     //Ahora para cada servicio encontrado, lo analizamos...
     console.log('DESCOMPONIENDO EL ',type, ' ------>');
+    console.log( serviciosRel.length );
     for (let i = 0; i < serviciosRel.length; i++) {
+      console.log( serviciosRel[i] );
       this.traducirServicio(serviciosRel[i].service);
     }
   }
@@ -219,6 +233,7 @@ export class StrategyUsComponent implements OnInit {
   }
 
   traducirRequire(propietario: string ,serviciosRel: any){
+    console.log("########################## REQUIRE 1 ################");
     this.traducirDependency(propietario,'Require',serviciosRel);
   }
 
