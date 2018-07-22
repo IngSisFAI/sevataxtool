@@ -14,6 +14,10 @@ import { StrategyUsComponent } from './translate/strategy-us/strategy-us.compone
 import { StrategySOLVERComponent } from './translate/strategy-solver/strategy-solver.component';
 import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.component';
 
+import { TranslatorCNFComponent } from './translate/translator-cnf/translator-cnf.component';
+import { LogicRulesCNFComponent } from './translate/translator-cnf/logic-rules-cnf/logic-rules-cnf.component';
+import { DocumentCreatorCNFComponent } from './translate/translator-cnf/document-creator-cnf/document-creator-cnf.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +36,7 @@ import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.co
     FormsModule,
     HttpModule
   ],
-  providers: [StrategyCNFComponent,BuilderSATComponent,DocumentSATComponent,StrategyUsComponent,StrategySOLVERComponent],
+  providers: [StrategyCNFComponent, TranslatorCNFComponent, BuilderSATComponent, DocumentSATComponent, StrategyUsComponent, StrategySOLVERComponent, LogicRulesCNFComponent, DocumentCreatorCNFComponent,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
