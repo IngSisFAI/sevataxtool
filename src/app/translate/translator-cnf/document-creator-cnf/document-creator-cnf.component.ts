@@ -81,6 +81,7 @@ export class DocumentCreatorCNFComponent {
   traducirServicio(servicio: any) {
     this.agregarServicio(servicio.name);
 
+    let regla = '';
     if (servicio.GlobalVariationPoint != null) {
       console.log('Punto variante globlal distinto de nulo');
       this.traducirPuntoGlobal(servicio.name, servicio.GlobalVariationPoint);
@@ -93,22 +94,86 @@ export class DocumentCreatorCNFComponent {
       );
     }
 
-    if (servicio.uses != null) {
-      this.logicRules.traducirUsa(servicio.name, servicio.uses);
+    if (servicio.uses != null){
+      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& USA:");
+      console.log(servicio);
+      const numP = this.devolverNumeroServicio(servicio.name) + '';
+      if (servicio.uses.length == null) {
+        this.agregarServicio(servicio.uses.service.name);
+        const numServicio = this.devolverNumeroServicio(servicio.uses.service.name);
+        regla = this.logicRules.traducirUsa(numP, numServicio);
+        this.traducirServicio(servicio.uses.service);
+      }  else {
+        const arregloNumeros = [];
+        for (let index = 0; index < servicio.uses.length; index++) {
+          this.agregarServicio(servicio.uses[index].service.name);
+          console.log('°°°°°°°°°°°°°°°°°°°°°° VOY A PEDIR: ', servicio.uses[index].service.name);
+          arregloNumeros.push(this.devolverNumeroServicio(servicio.uses[index].service.name));
+        }
+        regla = this.logicRules.traducirUsa(numP, arregloNumeros);
+        for (let index = 0; index < servicio.uses.length; index++) {
+          this.traducirServicio(servicio.uses[index].service);
+        }
+      }
+
+      this.agregarRegla(regla);
+
+
     }
 
     if (servicio.require != null) {
-      this.logicRules.traducirRequire(servicio.name, servicio.require);
+      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ REQUIRE: ');
+      console.log(servicio.require);
+      const numP = this.devolverNumeroServicio(servicio.name) + '';
+
+
+
+      if (servicio.require.length == null) {
+        this.agregarServicio(servicio.require.service.name);
+        const numServicio = this.devolverNumeroServicio(servicio.require.service.name);
+        regla = this.logicRules.traducirRequire(numP, numServicio);
+        this.traducirServicio(servicio.require.service);
+      } else {
+        const arregloNumeros = [];
+        for (let index = 0; index < servicio.require.length; index++) {
+          this.agregarServicio(servicio.require[index].service.name);
+          arregloNumeros.push(this.devolverNumeroServicio(servicio.require[index].service.name));
+        }
+        regla = this.logicRules.traducirRequire(numP, arregloNumeros);
+        for (let index = 0; index < servicio.require.length; index++) {
+          this.traducirServicio(servicio.require[index].service);
+        }
+      }
+      this.agregarRegla(regla);
     }
 
     if (servicio.exclude != null) {
-      this.logicRules.traducirExclude(servicio.name, servicio.exclude);
-    }
-    /**
-    console.log('el string esta de la siguiente manera..');
-    console.log(this.stringTemp);
+      console.log('#################################### EXCLUDE');
+      console.log(servicio);
+      const numP = this.devolverNumeroServicio(servicio.name) + '';
 
-    */
+
+
+      if (servicio.exclude.length == null) {
+
+        const numServicio = this.devolverNumeroServicio(servicio.exclude.service.name);
+        regla = this.logicRules.traducirExclude(numP, numServicio);
+        this.traducirServicio(servicio.exclude.service);
+
+      } else {
+        const arregloNumeros = [];
+        for (let index = 0; index < servicio.exclude.length; index++) {
+          this.agregarServicio(servicio.exclude[index].service.name);
+          arregloNumeros.push(this.devolverNumeroServicio(servicio.exclude[index].service.name));
+        }
+        regla = this.logicRules.traducirExclude(numP, arregloNumeros);
+        for (let index = 0; index < servicio.exclude.length; index++) {
+          this.traducirServicio(servicio.exclude[index].service);
+        }
+      }
+      this.agregarRegla(regla);
+
+    }
   }
 
   traducirPuntoEspecifico(propietario: string, punto: any) {
@@ -116,26 +181,62 @@ export class DocumentCreatorCNFComponent {
   }
 
   traducirPuntoGlobal(propietario: string, punto: any) {
-    console.log(punto);
+    console.log('EL punto es.....' , punto);
     let tipo = 'nada';
+    let numeroPropietario = -1;
+    let arregloNumeros = [];
+    let regla = '';
     for (const atr of Object.keys(punto)) {
       if (atr === 'AlternativeVP') {
         tipo = 'Alternativo';
         console.log('el tipo de punto variante es ' + tipo);
-        this.logicRules.traducirAlternativo(propietario, punto[atr].service);
+
+
+        const serviciosHijos = [];
+        const numP = this.devolverNumeroServicio(propietario);
+
+        // Agrego todos los servicios hijos del punto variante alternativo al arreglo de servicios conocidos.
+        for (let i = 0; i < punto[atr].service.length; i++) {
+          console.log('La longitud de hijos es de: ' + punto[atr].service.length);
+          this.agregarServicio(punto[atr].service[i].name);
+          const numS = this.devolverNumeroServicio(punto[atr].service[i].name);
+          console.log('el numero del servicio ' + punto[atr].service[i].name + '  es:  ' + numS);
+          serviciosHijos.push(numS);
+        }
+
+        regla = this.logicRules.traducirAlternativo(numP, serviciosHijos);
+        this.agregarRegla(regla);
       }
 
       if (atr === 'MandatoryVP') {
         tipo = 'Mandatorio';
         console.log('el tipo de punto variante es ' + tipo);
-        this.logicRules.traducirMandatory(propietario, punto[atr].service);
+        numeroPropietario = this.devolverNumeroServicio(propietario);
+        arregloNumeros = [];
+        for (let i = 0; i < punto[atr].service.length; i++) {
+          this.agregarServicio(punto[atr].service[i].name);
+          const numS = this.devolverNumeroServicio(
+            punto[atr].service[i].name
+          );
+          arregloNumeros.push(numS);
+        }
+        regla = this.logicRules.traducirMandatory(numeroPropietario, arregloNumeros);
+        this.agregarRegla(regla);
       }
 
       if (atr === 'OptionalVP') {
         tipo = 'Opcional';
         console.log('el tipo de punto variante es ' + tipo);
         console.log(punto[atr].service);
-        this.logicRules.traducirOpcional(propietario, punto[atr].service);
+        numeroPropietario = this.devolverNumeroServicio(propietario);
+        arregloNumeros = [];
+        for (let i = 0; i < punto[atr].service.length; i++) {
+          this.agregarServicio(punto[atr].service[i].name);
+          const numS = this.devolverNumeroServicio(punto[atr].service[i].name);
+          arregloNumeros.push(numS);
+        }
+        regla = this.logicRules.traducirOpcional(numeroPropietario, arregloNumeros);
+        this.agregarRegla(regla);
       }
 
       if (atr === 'VariantVP') {

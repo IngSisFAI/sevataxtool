@@ -17,7 +17,7 @@ import { SolverScenariosComponent } from './solver-scenarios/solver-scenarios.co
 import { TranslatorCNFComponent } from './translate/translator-cnf/translator-cnf.component';
 import { LogicRulesCNFComponent } from './translate/translator-cnf/logic-rules-cnf/logic-rules-cnf.component';
 import { DocumentCreatorCNFComponent } from './translate/translator-cnf/document-creator-cnf/document-creator-cnf.component';
-
+import { SolverConfigurationComponent } from './translate/solver-configuration-cnf/solver-configuration-sat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,12 +31,18 @@ import { DocumentCreatorCNFComponent } from './translate/translator-cnf/document
     StrategySOLVERComponent,
     SolverScenariosComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
+  imports: [BrowserModule, FormsModule, HttpModule],
+  providers: [
+    StrategyCNFComponent,
+    TranslatorCNFComponent,
+    BuilderSATComponent,
+    DocumentSATComponent,
+    StrategyUsComponent,
+    StrategySOLVERComponent,
+    LogicRulesCNFComponent,
+    DocumentCreatorCNFComponent,
+    SolverConfigurationComponent
   ],
-  providers: [StrategyCNFComponent, TranslatorCNFComponent, BuilderSATComponent, DocumentSATComponent, StrategyUsComponent, StrategySOLVERComponent, LogicRulesCNFComponent, DocumentCreatorCNFComponent,],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
