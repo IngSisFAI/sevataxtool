@@ -184,7 +184,7 @@ export class StrategyCNFComponent implements OnInit,Strategy {
     traducirOpcional(propietario: string ,serviciosRel: any){
       console.log('ENTRE A TRADUCIR OPCIONAL....... para el servicio: ' + propietario);
       console.log('Mis ServRel son: '+ serviciosRel);
-      let numP = this.devolverNumeroServicio(propietario);
+      let numP = propietario + '';
       for (let i = 0; i < serviciosRel.length; i++) {
           this.agregarServicio(serviciosRel[i].name);
           let numS = this.devolverNumeroServicio(serviciosRel[i].name);

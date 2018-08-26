@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Builder } from '../../interfaces/builder';
 import { DocumentSATComponent } from '../document-sat/document-sat.component';
 
@@ -7,7 +7,7 @@ import { DocumentSATComponent } from '../document-sat/document-sat.component';
   templateUrl: './builder-sat.component.html',
   styleUrls: ['./builder-sat.component.css']
 })
-export class BuilderSATComponent implements OnInit,Builder {
+export class BuilderSATComponent implements Builder {
 
   documento:DocumentSATComponent;
   public cantidadReglas: number;
@@ -17,8 +17,6 @@ export class BuilderSATComponent implements OnInit,Builder {
     this.cantidadReglas = 0;
   }
 
-  ngOnInit() {
-  }
 
   public agregarRegla(regla: string){
     this.documento.escribirRegla(regla);
