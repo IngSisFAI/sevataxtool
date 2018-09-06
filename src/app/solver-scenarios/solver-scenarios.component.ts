@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Datasheet } from '../clases/Datasheet';
 import { Service } from '../clases/Service';
-import { StrategyCNFComponent } from '../translate/strategy-cnf/strategy-cnf.component';
-import { StrategyUsComponent } from '../translate/strategy-us/strategy-us.component';
+import { DocumentCreatorCNFComponent } from '../translate/translator-cnf/document-creator-cnf/document-creator-cnf.component';
 import { TranslateComponent} from '../translate/translate.component';
 
 
@@ -23,26 +22,26 @@ export class SolverScenariosComponent implements OnInit {
   public traduccionCNF;
   public outResults;
 
-  constructor(private strategyCnf: StrategyCNFComponent, private strategyUsComponent:StrategyUsComponent,private trasnlateComponent:TranslateComponent) { }
+  constructor(private documentCreatorCNF: DocumentCreatorCNFComponent, private trasnlateComponent: TranslateComponent) { }
 
   ngOnInit() {
-    //Cabecera.
-    //Cantidad Reglas.
+    // Cabecera.
+    // Cantidad Reglas.
     // StringRaices.
     // Reglas.
     // Traduccion.
-    //Underline.
+    // Underline.
 
   }
 
 
-  public ejecutarEscenarios(ds:Datasheet[]){
-    this.traduccionCNF = this.strategyCnf.obtenerSalida(); //TODO: Revisar si esto va aca o en otro lado.
+  public ejecutarEscenarios(ds: Datasheet[]){
+    this.traduccionCNF = this.documentCreatorCNF.obtenerSalida(); // TODO: Revisar si esto va aca o en otro lado.
 
 
     for (let i = 0; i < ds.length; i++) {
-        let serviciosDs = ds[i].getServices();
-        for (let j = 0; j < serviciosDs.length; j++) { //Para cada raiz hago algo.
+        const serviciosDs = ds[i].getServices();
+        for (let j = 0; j < serviciosDs.length; j++) { // Para cada raiz hago algo.
 
           // this.recorrerVariationPoints(serviciosDs[j]);
           this.recorrerServicio(serviciosDs[i]);
@@ -50,7 +49,7 @@ export class SolverScenariosComponent implements OnInit {
     }
   }
 
-  private recorrerServicio(serv:Service){
+  private recorrerServicio(serv: Service){
 
     this.recorrerVariationPoints(serv);
     this.recorrerDependecies(serv);
@@ -58,42 +57,42 @@ export class SolverScenariosComponent implements OnInit {
 
   }
 
-  private recorrerVariationPoints(serv:Service){
+  private recorrerVariationPoints(serv: Service){
 
-    let vpList = serv.getVariationPoints();
+    const vpList = serv.getVariationPoints();
     for (let i = 0; i < vpList.length; i++) {
-        let variabilityType = vpList[i].getVariabilityType();
+        const variabilityType = vpList[i].getVariabilityType();
 
-          let variantList = vpList[i].getVariants();
-          this.recorrerVariantes(variantList,variabilityType);
+          const variantList = vpList[i].getVariants();
+          this.recorrerVariantes(variantList, variabilityType);
 
 
-        //TODO: Agregar para los diferetnes tipos de variabilidad!
+        // TODO: Agregar para los diferetnes tipos de variabilidad!
     }
   }
 
-  private recorrerDependecies(serv:Service){
+  private recorrerDependecies(serv: Service){
 
-    let dpList = serv.getDependencies();
+    const dpList = serv.getDependencies();
 
     for (let i = 0; i < dpList.length; i++) {
         dpList[i];
     }
   }
 
-  private recorrerVariantes(variantList:Service[], variabilityType:String){
+  private recorrerVariantes(variantList: Service[], variabilityType: String){
 
     for (let i = 0; i < variantList.length; i++) {
         // variantList[i];
 
-        //Aca agregamos los escenarios de test.
+        // Aca agregamos los escenarios de test.
 
-        if(variabilityType != 'MandatoryVP'){ //ESto sigfica q tiene q ser OptionalVP o AlternativeVP o VariantVP
+        if (variabilityType !== 'MandatoryVP'){ // ESto sigfica q tiene q ser OptionalVP o AlternativeVP o VariantVP
           this.gs_me_FalseOptional(variantList[i]);
 
         }
 
-        //Sigo recorriendo la estructura.
+        // Sigo recorriendo la estructura.
         this.recorrerServicio(variantList[i]);
     }
 
@@ -104,7 +103,7 @@ export class SolverScenariosComponent implements OnInit {
   public analyse_FalseOptional(){
 
 
-    var StrcUnder = this.trasnlateComponent.getStructureUnderlying();
+    const StrcUnder = this.trasnlateComponent.getStructureUnderlying();
     StrcUnder.getServices();
 
   }
@@ -112,45 +111,45 @@ export class SolverScenariosComponent implements OnInit {
 
   public analyse_self_dependency(){
 
-    this.outResults = "";
-    var StrcUnder = this.trasnlateComponent.getStructureUnderlying();
-    var services = StrcUnder.getServices();
+    this.outResults = '';
+    const StrcUnder = this.trasnlateComponent.getStructureUnderlying();
+    const services = StrcUnder.getServices();
 
     for (let i = 0; i < services.length; i++) {
-      this.gs_me_SelfDependency(services[i])
+      this.gs_me_SelfDependency(services[i]);
     }
     return this.outResults;
   }
 
 
 
-  public gs_me_FalseOptional(service:Service){
-   //TODO: Traer la traduccion CNF aqui.
-   //TODO: Buscar el numero del servicio en CNF, negarlo y evaluar
+  public gs_me_FalseOptional(service: Service){
+   // TODO: Traer la traduccion CNF aqui.
+   // TODO: Buscar el numero del servicio en CNF, negarlo y evaluar
 
-   let numServicio = this.strategyCnf.devolverNumeroServicio(service.getName());
+   const numServicio = this.documentCreatorCNF.devolverNumeroServicio(service.getName());
 
 
-   console.log("Imprimir resultado final del FalseOptional AQUI");
+   console.log('Imprimir resultado final del FalseOptional AQUI');
   }
 
-  public gs_me_SelfDependency(serv:Service){
+  public gs_me_SelfDependency(serv: Service){
 
-    let dependencies = serv.getDependencies();
-    let nombre = serv.getName();
+    const dependencies = serv.getDependencies();
+    const nombre = serv.getName();
 
     for (let i = 0; i < dependencies.length; i++) {
-        let sv = dependencies[i].getService();
+        const sv = dependencies[i].getService();
 
-        let nombreAux = sv.getName();
+        const nombreAux = sv.getName();
 
-        if(nombre == nombreAux ){
+        if (nombre === nombreAux ){
 
-          console.log("el servicio ", nombre , " tiene una SelfDependency!!! \0");
-          this.outResults = this.outResults + " '\n'" + "el servicio "+ nombre + " tiene una SelfDependency!!! \0";
+          console.log('el servicio ', nombre , ' tiene una SelfDependency!!! \0');
+          this.outResults = this.outResults + ' \'\n\'' + 'el servicio ' + nombre + ' tiene una SelfDependency!!! \0';
 
         }else {
-          this.gs_me_SelfDependency(sv)
+          this.gs_me_SelfDependency(sv);
         }
 
 

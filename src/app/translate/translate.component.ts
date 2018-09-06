@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StrategyCNFComponent } from './strategy-cnf/strategy-cnf.component';
 import { TranslatorCNFComponent } from './translator-cnf/translator-cnf.component';
 import { Datasheet } from '../clases/Datasheet';
-import { StrategyUsComponent } from './strategy-us/strategy-us.component';
-import { StrategySOLVERComponent } from './strategy-solver/strategy-solver.component';
 
 
 @Component({
@@ -13,72 +10,69 @@ import { StrategySOLVERComponent } from './strategy-solver/strategy-solver.compo
 })
 export class TranslateComponent implements OnInit {
 
-  salida = "";
-  resultados = "";
+  salida = '';
+  resultados = '';
   preResultados = '';
   structureUnderlying: Datasheet= null;
-  @ViewChild(StrategySOLVERComponent) StrategySOLVER: StrategySOLVERComponent;
+  // @ViewChild(StrategySOLVERComponent) StrategySOLVER: StrategySOLVERComponent;
 
-  constructor(private strategyCnf: StrategyCNFComponent,
-              private strategyUsComponent: StrategyUsComponent,
-              private strategySOLVER: StrategySOLVERComponent,
-    private translatorCnf: TranslatorCNFComponent) {
+  constructor(private translatorCnf: TranslatorCNFComponent) {
 
   }
 
   ngOnInit() {
   }
 
-  public generarEstructura(json){
-    this.structureUnderlying = this.strategyUsComponent.generarEstructura(json);
-  }
-  public analyse_False_Optional_bt(){
-    console.log('INIT FALSE OPTIONAL BT');
-    console.log(this.salida);
+  // public generarEstructura(json){
+  //   this.structureUnderlying = this.strategyUsComponent.generarEstructura(json);
+  // }
+  // public analyse_False_Optional_bt(){
+  //   console.log('INIT FALSE OPTIONAL BT');
+  //   console.log(this.salida);
 
 
-    this.resultados = this.strategySOLVER.analyse_false_optional(this.salida, this.structureUnderlying);
-  }
+  //   this.resultados = this.strategySOLVER.analyse_false_optional(this.salida, this.structureUnderlying);
+  // }
   public load_cnf(){
 
     this.salida =  this.preResultados;
 
   }
-  public analyse_self_dependency_bt(){
-    this.resultados = this.strategySOLVER.analyse_self_dependency(this.structureUnderlying);
-  }
-  public constraint_contradition_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_constraint_contradition(this.structureUnderlying);
-  }
-  public alternative_inclusion_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_alternative_inclusion(this.structureUnderlying);
-  }
-  public parent_exclusion_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_parent_exclusion(this.structureUnderlying);
-  }
-  public mandatory_exclusion_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_mandatory_exclusion(this.structureUnderlying);
-  }
-  public mandatory_inclusion_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_mandatory_inclusion(this.structureUnderlying);
-  }
-  transitive_inconsistency_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_transitive_inconsistency(this.structureUnderlying);
-  }
-  transitive_redundancy_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_transitive_redundancy(this.structureUnderlying);
-  }
-  public parent_inclusion_bt(){
-    this.resultados = '';
-    this.resultados = this.strategySOLVER.analyse_parent_inclusion(this.structureUnderlying);
-  }
+  // public analyse_self_dependency_bt(){
+  //   this.resultados = this.strategySOLVER.analyse_self_dependency(this.structureUnderlying);
+  // }
+  // public constraint_contradition_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_constraint_contradition(this.structureUnderlying);
+  // }
+  // public alternative_inclusion_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_alternative_inclusion(this.structureUnderlying);
+  // }
+  // public parent_exclusion_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_parent_exclusion(this.structureUnderlying);
+  // }
+  // public mandatory_exclusion_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_mandatory_exclusion(this.structureUnderlying);
+  // }
+  // public mandatory_inclusion_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_mandatory_inclusion(this.structureUnderlying);
+  // }
+  // transitive_inconsistency_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_transitive_inconsistency(this.structureUnderlying);
+  // }
+  // transitive_redundancy_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_transitive_redundancy(this.structureUnderlying);
+  // }
+  // public parent_inclusion_bt(){
+  //   this.resultados = '';
+  //   this.resultados = this.strategySOLVER.analyse_parent_inclusion(this.structureUnderlying);
+  // }
  public run_sat_solver(cnf){
     this.salida = cnf;
 
