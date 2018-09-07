@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SolverConfigurationComponent } from '../../solver-configuration-cnf/solver-configuration-sat.component';
 
 @Component({
   selector: 'logic-rules-cnf'
@@ -10,16 +11,19 @@ export class LogicRulesCNFComponent {
   stringRaices = '';
   stringTemp = '';
   cantidadReglas = 0;
+  solverConfigurator: SolverConfigurationComponent;
 
-  constructor() {}
+  constructor(solverConfigurator: SolverConfigurationComponent) {
+    this.solverConfigurator = solverConfigurator;
+  }
 
   traducirMandatory(numP: number, serviciosHijos: any): string {
     // const numP = this.documentCreator.devolverNumeroServicio(propietario);
-    console.log(serviciosHijos);
+    // console.log(serviciosHijos);
     let regla = '';
     for (let i = 0; i < serviciosHijos.length; i++) {
       regla += '-' + numP + ' ' + serviciosHijos[i] + ' 0 \n';
-      console.log('REGLA DEL MANDATORY = :  ' + regla);
+      this.solverConfigurator.sumarCantidad();
       // this.documentCreator.agregarRegla(regla);
     }
     return regla;
@@ -36,7 +40,8 @@ export class LogicRulesCNFComponent {
         ' ' +
         serviciosHijos[i] +
         ' 0 \n';
-      console.log('REGLA DEL OPCIONAL = :  ' + regla);
+      this.solverConfigurator.sumarCantidad();
+
     }
     return regla;
   }
@@ -44,29 +49,32 @@ export class LogicRulesCNFComponent {
   traducirAlternativo(numP: number, serviciosHijos: any): string {
     // Aca armo la regla de todos los hijos positivos.
     // Ejemplo -1 2 3 4 0 , donde 1 es el servicio con el punto variante alternativo.
-    console.log('DALE PAPA1º Regla alternativa: ');
+    // console.info('DALE PAPA1º Regla alternativa: ');
 
     let regla = '';
     regla = '-' + numP;
+    // this.solverConfigurator.sumarCantidad();
     for (let i = 0; i < serviciosHijos.length; i++) {
       regla = regla + ' ' + serviciosHijos[i];
     }
     regla = regla + ' 0 \n';
-    console.log('1º Regla alternativa: ' + regla);
+    this.solverConfigurator.sumarCantidad();
+
     // -padre -> hijos (positivos )
     // -2 3 4 0
 
     // Reinicio la variable Regla temporal.
 
-    
     // A continuacion agregaremos las reglas de solo 1 positvo.
     if (serviciosHijos.length === 2) {
-      regla += "-" + numP;
+      regla += '-' + numP;
+      // this.solverConfigurator.sumarCantidad();
+
       for (let i = 0; i < serviciosHijos.length; i++) {
         regla += ' -' + serviciosHijos[i];
       }
       regla += ' 0 \n';
-      console.log('1º Regla alternativa: ' + regla);
+      this.solverConfigurator.sumarCantidad();
       // -padre -> hijos (negativos )
       // -2 -3 -4 0
       // this.documentCreator.agregarRegla(regla);
@@ -75,6 +83,8 @@ export class LogicRulesCNFComponent {
     if (serviciosHijos.length > 2) {
       for (let i = 0; i < serviciosHijos.length; i++) {
         regla += '-' + numP;
+        // this.solverConfigurator.sumarCantidad();
+
         for (let j = 0; j < serviciosHijos.length; j++) {
           if (i === j) {
             // Entonces este sera el elemento positivo (solo se va a dar 1 vez en todas las vueltas para cada servicio)
@@ -84,7 +94,7 @@ export class LogicRulesCNFComponent {
           }
         }
         regla += ' 0 \n';
-        console.log(i + 'º Regla alternativa: ' + regla);
+        this.solverConfigurator.sumarCantidad();
         // this.documentCreator.agregarRegla(regla);
       }
     }
@@ -96,14 +106,21 @@ export class LogicRulesCNFComponent {
       for (let i = 0; i < serviciosHijos.length; i++) {
         if (i === serviciosHijos.length - 1 && serviciosHijos.length !== 2) {
           regla += '-' + serviciosHijos[i] + ' -' + serviciosHijos[0] + ' 0 \n';
-          console.log('Regla giratoria del alternativo...');
+
+          this.solverConfigurator.sumarCantidad();
+
+
+
         } else {
           regla +=
             '-' + serviciosHijos[i] + ' -' + serviciosHijos[i + 1] + ' 0 \n';
+
+          this.solverConfigurator.sumarCantidad();
+
         }
 
-        console.log('Regla combinatoria... : ' + regla);
-        console.log('Regla XXXXXXXXXXXX... : ' + regla);
+        // console.log('Regla combinatoria... : ' + regla);
+        // console.log('Regla XXXXXXXXXXXX... : ' + regla);
         // this.documentCreator.agregarRegla(regla);
         // regla = ''; // Limpio la regla por las dudas...
       }
@@ -130,8 +147,14 @@ export class LogicRulesCNFComponent {
       // this.documentCreator.agregarServicio(serviciosUsados.service.name);
       const numS = serviciosHijos;
       let regla = '-' + numP + ' ' + numS + ' 0 \n';
+
+      this.solverConfigurator.sumarCantidad();
+
       // this.documentCreator.agregarRegla(regla);
       regla += '-' + numS + ' ' + numP + ' 0 \n';
+
+      this.solverConfigurator.sumarCantidad();
+
       // this.documentCreator.agregarRegla(regla);
 
       return regla;
@@ -142,7 +165,13 @@ export class LogicRulesCNFComponent {
         const numS = serviciosHijos[i];
 
         regla += '-' + numP + ' ' + numS + ' 0 \n';
+
+        this.solverConfigurator.sumarCantidad();
+
         regla += '-' + numS + ' ' + numP + ' 0 \n';
+
+        this.solverConfigurator.sumarCantidad();
+
       }
 
       return regla;
@@ -155,6 +184,9 @@ export class LogicRulesCNFComponent {
       // Hay 1 require.
       const numS = serviciosHijos;
       regla = '-' + numP + ' ' + numS + ' 0 \n';
+
+      this.solverConfigurator.sumarCantidad();
+
       return regla;
     } else {
       // Hay mas de 1 require.
@@ -162,6 +194,9 @@ export class LogicRulesCNFComponent {
         const numS = serviciosHijos[i];
 
         regla += '-' + numP + ' ' + numS + ' 0 \n';
+
+        this.solverConfigurator.sumarCantidad();
+
       }
       return regla;
     }
@@ -174,13 +209,19 @@ export class LogicRulesCNFComponent {
       // Hay 1 exclude.
       const numS = serviciosHijos;
       regla = '-' + numP + ' -' + numS + ' 0 \n';
-     return regla;
+
+      this.solverConfigurator.sumarCantidad();
+
+      return regla;
     } else {
       // Hay mas de 1 exclude.
       for (let i = 0; i < serviciosHijos.length; i++) {
         const numS = serviciosHijos[i];
 
         regla += '-' + numP + ' -' + numS + ' 0 \n';
+
+        this.solverConfigurator.sumarCantidad();
+
       }
       return regla;
     }

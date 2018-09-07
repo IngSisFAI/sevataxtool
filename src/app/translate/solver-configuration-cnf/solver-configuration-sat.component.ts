@@ -19,7 +19,12 @@ export class SolverConfigurationComponent implements Builder {
 
   public agregarRegla(regla: string) {
     this.documento.escribirRegla(regla);
+    // this.cantidadReglas++;
+  }
+
+  public sumarCantidad() {
     this.cantidadReglas++;
+    console.log('ENTRE ==================================================== ', this.cantidadReglas);
   }
 
   public confeccionarCabecera(cantidadServicios: number): string {
@@ -32,7 +37,7 @@ export class SolverConfigurationComponent implements Builder {
 
   public finalizarCreacionDocumento(cantidadServicios: number, raices: string): string {
 
-    let cabecera = this.confeccionarCabecera(cantidadServicios);
+    const cabecera = this.confeccionarCabecera(cantidadServicios);
 
     return this.documento.finalizarDocumento(cabecera, raices);
 

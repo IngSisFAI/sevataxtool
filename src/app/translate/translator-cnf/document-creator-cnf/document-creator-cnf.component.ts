@@ -23,8 +23,8 @@ export class DocumentCreatorCNFComponent {
    * @param json Estructura de la dependencia de los servicios
    */
   traducirJson(json) {
-    console.log('El json inicial es: ');
-    console.log(json);
+    // console.log('El json inicial es: ');
+    // console.log(json);
     this.salida = json;
     this.servicios = [];
     this.cantServ = 1;
@@ -38,6 +38,7 @@ export class DocumentCreatorCNFComponent {
     this.servicios.push([this.cantServ, a.Datasheet.id]);
     this.stringRaices = this.cantServ + ' 0 \n';
     this.cantServ++;
+    this.solverConfiguration.sumarCantidad();
 
     const ds = a.Datasheet;
     let numeroServicio;
@@ -47,6 +48,7 @@ export class DocumentCreatorCNFComponent {
       this.traducirServicio(ds.service);
       numeroServicio = this.devolverNumeroServicio(ds.service.name);
       this.stringRaices = this.stringRaices + '-1 ' + numeroServicio + ' 0 \n';
+      this.solverConfiguration.sumarCantidad();
     } else {
       // Hay mas de 1 raiz para este DS.
       for (let i = 0; i < ds.service.length; i++) {
@@ -54,6 +56,7 @@ export class DocumentCreatorCNFComponent {
         numeroServicio = this.devolverNumeroServicio(ds.service[i].name);
         this.stringRaices =
           this.stringRaices + '-1 ' + numeroServicio + ' 0 \n';
+        this.solverConfiguration.sumarCantidad();
       }
     }
     /*for(var atr in ds){
@@ -62,17 +65,17 @@ export class DocumentCreatorCNFComponent {
       console.log(nombreAtr);
     }*/
 
-    console.log(this.servicios);
+    // console.log(this.servicios);
     this.confeccionarStringFinal();
   }
 
   agregarServicio(nombre: string) {
     if (this.servicios.find(x => x[1] === nombre)) {
       // Si ya lo tengo agregado al servicio
-      console.log('ya existia ese servicio: ' + nombre);
+      // console.log('ya existia ese servicio: ' + nombre);
     } else {
       // Si no existia ese servicio
-      console.log('No existia el servicio: ' + nombre);
+      // console.log('No existia el servicio: ' + nombre);
       this.servicios.push([this.cantServ, nombre]);
       this.cantServ++;
     }
@@ -83,7 +86,7 @@ export class DocumentCreatorCNFComponent {
 
     let regla = '';
     if (servicio.GlobalVariationPoint != null) {
-      console.log('Punto variante globlal distinto de nulo');
+      // console.log('Punto variante globlal distinto de nulo');
       this.traducirPuntoGlobal(servicio.name, servicio.GlobalVariationPoint);
     }
 
@@ -95,8 +98,8 @@ export class DocumentCreatorCNFComponent {
     }
 
     if (servicio.uses != null){
-      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& USA:");
-      console.log(servicio);
+      // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& USA:");
+      // console.log(servicio);
       const numP = this.devolverNumeroServicio(servicio.name) + '';
       if (servicio.uses.length == null) {
         this.agregarServicio(servicio.uses.service.name);
@@ -107,7 +110,7 @@ export class DocumentCreatorCNFComponent {
         const arregloNumeros = [];
         for (let index = 0; index < servicio.uses.length; index++) {
           this.agregarServicio(servicio.uses[index].service.name);
-          console.log('°°°°°°°°°°°°°°°°°°°°°° VOY A PEDIR: ', servicio.uses[index].service.name);
+          // console.log('°°°°°°°°°°°°°°°°°°°°°° VOY A PEDIR: ', servicio.uses[index].service.name);
           arregloNumeros.push(this.devolverNumeroServicio(servicio.uses[index].service.name));
         }
         regla = this.logicRules.traducirUsa(numP, arregloNumeros);
@@ -122,8 +125,8 @@ export class DocumentCreatorCNFComponent {
     }
 
     if (servicio.require != null) {
-      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ REQUIRE: ');
-      console.log(servicio.require);
+      // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ REQUIRE: ');
+      // console.log(servicio.require);
       const numP = this.devolverNumeroServicio(servicio.name) + '';
 
 
@@ -148,8 +151,8 @@ export class DocumentCreatorCNFComponent {
     }
 
     if (servicio.exclude != null) {
-      console.log('#################################### EXCLUDE');
-      console.log(servicio);
+      // console.log('#################################### EXCLUDE');
+      // console.log(servicio);
       const numP = this.devolverNumeroServicio(servicio.name) + '';
 
 
@@ -181,7 +184,7 @@ export class DocumentCreatorCNFComponent {
   }
 
   traducirPuntoGlobal(propietario: string, punto: any) {
-    console.log('EL punto es.....' , punto);
+    // console.log('EL punto es.....' , punto);
     let tipo = 'nada';
     let numeroPropietario = -1;
     let arregloNumeros = [];
@@ -189,7 +192,7 @@ export class DocumentCreatorCNFComponent {
     for (const atr of Object.keys(punto)) {
       if (atr === 'AlternativeVP') {
         tipo = 'Alternativo';
-        console.log('el tipo de punto variante es ' + tipo);
+        // console.log('el tipo de punto variante es ' + tipo);
 
 
         const serviciosHijos = [];
@@ -197,10 +200,10 @@ export class DocumentCreatorCNFComponent {
 
         // Agrego todos los servicios hijos del punto variante alternativo al arreglo de servicios conocidos.
         for (let i = 0; i < punto[atr].service.length; i++) {
-          console.log('La longitud de hijos es de: ' + punto[atr].service.length);
+          // console.log('La longitud de hijos es de: ' + punto[atr].service.length);
           this.agregarServicio(punto[atr].service[i].name);
           const numS = this.devolverNumeroServicio(punto[atr].service[i].name);
-          console.log('el numero del servicio ' + punto[atr].service[i].name + '  es:  ' + numS);
+          // console.log('el numero del servicio ' + punto[atr].service[i].name + '  es:  ' + numS);
           serviciosHijos.push(numS);
         }
 
@@ -210,7 +213,7 @@ export class DocumentCreatorCNFComponent {
 
       if (atr === 'MandatoryVP') {
         tipo = 'Mandatorio';
-        console.log('el tipo de punto variante es ' + tipo);
+        // console.log('el tipo de punto variante es ' + tipo);
         numeroPropietario = this.devolverNumeroServicio(propietario);
         arregloNumeros = [];
         for (let i = 0; i < punto[atr].service.length; i++) {
@@ -226,8 +229,8 @@ export class DocumentCreatorCNFComponent {
 
       if (atr === 'OptionalVP') {
         tipo = 'Opcional';
-        console.log('el tipo de punto variante es ' + tipo);
-        console.log(punto[atr].service);
+        // console.log('el tipo de punto variante es ' + tipo);
+        // console.log(punto[atr].service);
         numeroPropietario = this.devolverNumeroServicio(propietario);
         arregloNumeros = [];
         for (let i = 0; i < punto[atr].service.length; i++) {
@@ -241,16 +244,16 @@ export class DocumentCreatorCNFComponent {
 
       if (atr === 'VariantVP') {
         tipo = 'Variante';
-        console.log('el tipo de punto variante es ' + tipo);
+        // console.log('el tipo de punto variante es ' + tipo);
         this.logicRules.traducirVariante(propietario, punto[atr].service);
       }
 
       // REVISAR SI LO SIGUIENTE VA NO O ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
       // Ahora para cada servicio encontrado, lo analizamos...
-      console.log('comienza la descomposicion...');
+      // console.log('comienza la descomposicion...');
       const servicios = punto[atr].service;
-      console.log(servicios);
+      // console.log(servicios);
       for (let i = 0; i < servicios.length; i++) {
         this.traducirServicio(servicios[i]);
       }
