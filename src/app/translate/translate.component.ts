@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslatorCNFComponent } from './translator-cnf/translator-cnf.component';
+import { StrategySOLVERComponent } from './querys-cnf/strategy-solver.component';
 import { Datasheet } from '../clases/Datasheet';
 
 
@@ -9,34 +10,35 @@ import { Datasheet } from '../clases/Datasheet';
   styleUrls: ['./translate.component.css']
 })
 export class TranslateComponent implements OnInit {
-
   salida = '';
   resultados = '';
   preResultados = '';
-  structureUnderlying: Datasheet= null;
+  structureUnderlying: Datasheet = null;
   // @ViewChild(StrategySOLVERComponent) StrategySOLVER: StrategySOLVERComponent;
 
-  constructor(private translatorCnf: TranslatorCNFComponent) {
+  constructor(
+    private translatorCnf: TranslatorCNFComponent,
+    private strategySOLVER: StrategySOLVERComponent) {}
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // public generarEstructura(json){
   //   this.structureUnderlying = this.strategyUsComponent.generarEstructura(json);
   // }
-  // public analyse_False_Optional_bt(){
-  //   console.log('INIT FALSE OPTIONAL BT');
-  //   console.log(this.salida);
 
+  public analyse_False_Optional_bt() {
+    console.log('INIT FALSE OPTIONAL BT');
+    console.log(this.salida);
 
-  //   this.resultados = this.strategySOLVER.analyse_false_optional(this.salida, this.structureUnderlying);
-  // }
-  public load_cnf(){
-
-    this.salida =  this.preResultados;
-
+    console.log('LALA: ');
+    console.log(this.strategySOLVER);
+    this.resultados = this.strategySOLVER.analyse_false_optional(
+      this.salida,
+      this.structureUnderlying
+    );
+  }
+  public load_cnf() {
+    this.salida = this.preResultados;
   }
   // public analyse_self_dependency_bt(){
   //   this.resultados = this.strategySOLVER.analyse_self_dependency(this.structureUnderlying);
@@ -73,28 +75,25 @@ export class TranslateComponent implements OnInit {
   //   this.resultados = '';
   //   this.resultados = this.strategySOLVER.analyse_parent_inclusion(this.structureUnderlying);
   // }
- public run_sat_solver(cnf){
+  public run_sat_solver(cnf) {
     this.salida = cnf;
-
   }
 
-  traducirJson(json){
+  traducirJson(json) {
     // this.strategyCnf.traducirJson(json);
     this.salida = '';
     this.salida = this.translatorCnf.traducirJson(json);
   }
-  public getStructureUnderlying(){
+  public getStructureUnderlying() {
     return this.structureUnderlying;
-
-}
-public getCnfCorpus(){
-    return this.salida;
-}
-public getCnfHead(){
+  }
+  public getCnfCorpus() {
     return this.salida;
   }
-  public getCnf(){
+  public getCnfHead() {
     return this.salida;
   }
-
+  public getCnf() {
+    return this.salida;
+  }
 }

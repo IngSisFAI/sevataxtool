@@ -14,7 +14,7 @@ import { TranslatorCNFComponent } from './translate/translator-cnf/translator-cn
 import { LogicRulesCNFComponent } from './translate/translator-cnf/logic-rules-cnf/logic-rules-cnf.component';
 import { DocumentCreatorCNFComponent } from './translate/translator-cnf/document-creator-cnf/document-creator-cnf.component';
 import { SolverConfigurationComponent } from './translate/solver-configuration-cnf/solver-configuration-sat.component';
-
+import { StrategySOLVERComponent } from './translate/querys-cnf/strategy-solver.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,8 @@ import { SolverConfigurationComponent } from './translate/solver-configuration-c
     DocumentSATComponent,
     LogicRulesCNFComponent,
     DocumentCreatorCNFComponent,
-    SolverConfigurationComponent
+    SolverConfigurationComponent,
+    StrategySOLVERComponent
   ],
   bootstrap: [AppComponent]
 })
