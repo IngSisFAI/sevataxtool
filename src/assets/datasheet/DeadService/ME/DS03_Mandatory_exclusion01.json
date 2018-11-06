@@ -1,0 +1,41 @@
+{
+  "Datasheet": {
+    "id": "Model_Name",
+    "service": {
+      "name": "A",
+      "GlobalVariationPoint": {
+        "MandatoryVP": {
+          "service": [
+            { "name": "C.1",
+              "GlobalVariationPoint": {
+                "MandatoryVP": {
+                  "service": [
+                    { "name": "D",
+                      "exclude": {
+                        "service": [{"name": "C.2"}]
+                      }
+                    },
+                    { "name": "D.2"
+
+                    }
+
+                  ]
+                }
+              }
+
+            },
+            { "name": "C.2"
+
+            }
+
+          ]
+        }
+      }
+
+
+    }
+
+  }
+}
+
+

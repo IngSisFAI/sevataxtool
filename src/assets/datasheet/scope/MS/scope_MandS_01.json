@@ -1,0 +1,92 @@
+{
+  "Datasheet": {
+    "id": "service functionalityError1",
+    "service": {
+      "name": "A",
+      "SpecificVariationPoint": {
+        "MandatoryVP": {
+          "service": [
+            { "name": "B" }
+           ]
+        },
+        "MandatoryVP": {
+          "service": [
+            {"name": "C",
+              "SpecificVariationPoint": {
+                "AlternativeVP": {
+                  "service": [
+                    {
+                      "name": "C.1",
+                      "GlobalVariationPoint": {
+                        "OptionalVP": {
+                          "service": [
+                            {
+                              "name": "E",
+                              "require": {
+                                "service": { "name": "C.2" }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    { "name": "C.2"}
+                  ]
+                }
+              }
+
+            },
+            {
+              "name": "D",
+              "GlobalVariationPoint": {
+                "OptionalVP": {
+                  "service": [
+                    {
+                      "name": "D.1",
+                      "GlobalVariationPoint": {
+                        "AlternativeVP": {
+                          "service": [
+                            {
+                              "name": "E.1",
+                              "GlobalVariationPoint": {
+                                "OptionalVP": {
+                                  "service": [
+                                    {"name": "F.1" },
+                                    {
+                                      "name": "F.2",
+                                      "exclude": {
+                                        "service": { "name": "E.2" }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "name": "E.2",
+                              "exclude": {
+                                "service": { "name": "A" }
+                              },
+                              "exclude": {
+                                "service": { "name": "B" }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+
+                  ]
+                }
+              }
+
+            }
+          ]
+        }
+      },
+      "require": {
+        "service": { "name": "F.1" }
+      }
+    }
+  }
+}

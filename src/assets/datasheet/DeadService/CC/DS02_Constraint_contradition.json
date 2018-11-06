@@ -1,0 +1,22 @@
+{
+  "Datasheet": {
+    "id": "service functionalitySelfDep",
+    "service": {
+      "name": "A",
+      "require": {
+        "service":[
+          {
+            "name": "B",
+            "exclude":{
+              "service":[
+                {"name":"A"}
+              ]
+            }
+          }
+        ]
+
+      }
+
+    }
+  }
+}

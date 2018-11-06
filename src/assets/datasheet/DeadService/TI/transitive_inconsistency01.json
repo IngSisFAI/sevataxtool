@@ -1,0 +1,34 @@
+  {
+    "Datasheet": {
+      "id": "Model_Name",
+      "service": {
+        "name": "A",
+        "require": {
+          "service": [{
+            "name": "B",
+            "require": {
+              "service": [{"name": "D"}]
+            }
+          }]
+        },
+        "exclude": {
+          "service": [{
+            "name": "C",
+            "require": {
+              "service": [{
+                "name": "E",
+                "require": {
+                  "service": [{"name": "D"}]
+                }
+              }]
+            }
+          }]
+        }
+
+
+      }
+
+    }
+  }
+
+

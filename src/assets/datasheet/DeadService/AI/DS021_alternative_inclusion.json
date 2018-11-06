@@ -1,0 +1,27 @@
+{
+  "Datasheet": {
+    "id": "Model_Name",
+    "service": {
+      "name": "A",
+      "GlobalVariationPoint": {
+        "AlternativeVP": {
+          "service": [
+            { "name": "C.1",
+              "require": {
+                "service": [{"name": "C.2"}]
+              }
+            },
+            { "name": "C.2"
+
+              }
+
+          ]
+        }
+      }
+
+    }
+
+  }
+}
+
+

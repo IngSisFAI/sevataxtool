@@ -1,0 +1,23 @@
+  {
+    "Datasheet": {
+      "id": "Model_Name",
+      "service": {
+        "name": "A",
+        "require": {
+          "service": [{
+            "name": "B",
+            "require": {
+              "service": [{"name": "C"}]
+            }
+          },{
+            "name":"C"
+          }]
+        }
+
+
+      }
+
+    }
+  }
+
+

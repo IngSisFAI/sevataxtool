@@ -1,0 +1,23 @@
+{
+  "Datasheet": {
+    "id": "service functionalitySelfDep",
+    "service": {
+      "name": "A",
+      "GlobalVariationPoint": {
+        "MandatoryVP": {
+          "service": [
+            { "name": "A1" },
+            { "name": "A2" }
+          ]
+        }
+      },
+      "uses": {
+        "service":[
+          { "name": "A"}
+          ]
+
+      }
+
+    }
+  }
+}

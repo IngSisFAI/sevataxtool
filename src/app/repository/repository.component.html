@@ -1,0 +1,71 @@
+
+<div class="row">
+
+  <div class="col-xs-12">
+
+    <p></p>
+    <div class="row">
+      <div class="col-sm-2" style="background-color: #d0d8e8; border-color: black" >
+      <h3>Scenarios Examples </h3>
+      <div class="list-group">
+        <label> Model Error</label>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(1)" >False Optional</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(2)">Self Dependency</button>
+        <button type="button" class="list-group-item list-group-item-action"(click)="select(3)">V.P. Violations</button>
+
+        <label> Dead Services </label>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(4)">Constraint Contradiction</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(5)">Alternative Inclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(6)">Mandatory Exclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(7)">Parent Exclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(8)">Transitive Inconsistency</button>
+        <label> Redundancies </label>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(9)">Alternative Exclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(10)">Mandatory Inclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(11)">Parent  Inclusion</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(12)">Transitive Redundancy</button>
+        <label> Scope </label>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(13)">False Specific</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(14)">Mandatory Specific</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(15)">Contradictory Scopes</button>
+        <label> Cross Datasheets </label>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(16)">Cross Redundancy</button>
+        <button type="button" class="list-group-item list-group-item-action" (click)="select(17)">Cross Inconsistency</button>
+
+      </div>
+
+
+
+
+    </div>
+
+      <div class="col-sm-5" style="background-color: #d0d8e8; border-color: black" >
+        <h3> {{title}} </h3>
+        <p> {{detail}} </p>
+        <div *ngFor="let bot of buttons; let i = index ">
+        <div class="col-sm-7">
+        <button petreton
+                type="button" class="list-group-item"
+                (click)="loadDatasheet(i)">
+          Example-{{i}}
+        </button>
+        </div><div class="col-sm-5">
+        <button
+                type="button" class="list-group-item"
+                (click)="translate(i)">
+          Datasheet Validation
+        </button>
+        </div>
+        </div>
+
+
+      </div>
+      <div class="col-sm-5"style="background-color: #d0d8e8; border-color: black" >
+        <h3> Datasheet </h3>
+        <textarea *ngIf="datasheet!=''" class="form-control" rows="23" >
+          {{datasheet |json}}
+        </textarea>
+      </div>
+    </div>
+    </div>
+  </div>

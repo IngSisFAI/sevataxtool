@@ -1,0 +1,48 @@
+
+
+{
+  "Datasheet": {
+    "id": "service functionalitySelfDep",
+    "service": {
+      "name": "A",
+      "require": {
+        "service": [
+          {
+            "name": "A",
+            "GlobalVariationPoint": {
+              "MandatoryVP": {
+                "service": [
+                  {
+                    "name": "A1"
+                  },
+                  {
+                    "name": "C",
+                    "GlobalVariationPoint": {
+                      "AlternativeVP": {
+                        "service": [
+                          { "name": "C.1"
+
+                          },
+                          { "name": "C.2"
+
+                          }
+
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+
+
+
+
+
+

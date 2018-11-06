@@ -1,214 +1,217 @@
-<div class="row">
-  <div class="col-xs-12">
-    <h1>Data Input</h1>
 
+<div class="row">
+
+  <div class="col-xs-12">
 
     <p></p>
     <div class="row">
-    <div class="form-group col-sm-6">
-      <label for="json">Datasheet JSON:</label>
-      <textarea class=" hidden form-control" rows="15">
- {
-  "Datasheet": {
-    "id": "service functionalityError1",
-    "service": {
-      "name": "PG.1",
-      "GlobalVariationPoint": {
-        "AlternativeVP": {
-          "service": [
-            { "name": "MM.13" ,
-              "require": {
-                "service": [ { "name": "MM.4" } , { "name": "HI.11" }  ]
-              }
-            },
-            {  "name": "MM.10"   }
-          ]
-        }
-      }
-    }
-  }
-}
+    <div class="col-sm-4"style="background-color: #d0d8e8; border-color: black" >
+      <h1 for="json">Variability Model</h1>
+      <textarea class="form-control" rows="23" id="json" #json>
 
-        </textarea>
-      <textarea class="  form-control"  id="json" #json rows="15" >{
-        "Datasheet": {
-          "id": "service functionalityError1",
-          "service": {
-            "name": "PG.1",
-            "GlobalVariationPoint": {
-              "OptionalVP": {
-                "service": [
-                { "name": "MM.13" },
-                {
-                  "name": "MM.10",
-                  "GlobalVariationPoint": {
-                    "AlternativeVP": {
-                      "service": [
-                      {
-                        "name": "HI.13",
-                        "GlobalVariationPoint": {
-                          "MandatoryVP": {
-                            "service": [
-                            {
-                              "name": "MM.7",
-                              "uses": {
-                                "service": { "name": "PG.7" }
-                              }
-                            },
-                            {
-                              "name": "MM.2",
-                              "GlobalVariationPoint": {
-                                "AlternativeVP": {
-                                  "service": [
-                                  { "name": "HI.16" },
-                                  {
-                                    "name": "MM.11",
-                                    "uses": {
-                                      "service": { "name": "HI.6" }
-                                    }
-                                  },
-                                  {
-                                    "name": "PG.5",
-                                    "uses": [
-                                    {
-                                      "service": {
-                                        "name": "HI.7",
-                                        "GlobalVariationPoint": {
-                                          "MandatoryVP": {
-                                            "service": [
-                                            {
-                                              "name": "PG.6",
-                                              "uses": {
-                                                "service": { "name": "HI.1" }
-                                              }
-                                            },
-                                            {
-                                              "name": "HI.2",
-                                              "uses": {
-                                                "service": { "name": "MM.12" }
-                                              }
-                                            }
-                                            ]
-                                          }
-                                        },
-                                        "uses": {
-                                          "service": { "name": "PG.8" }
-                                        }
-                                      }
-                                    },
-                                    {
-                                      "service": { "name": "MM.9" }
-                                    }
-                                    ]
-                                  }
-                                  ]
-                                }
-                              },
-                              "uses": {
-                                "service": { "name": "MM.8" }
-                              }
-                            }
-                            ]
-                          }
-                        }
-                      },
-                      { "name": "MM.4" },
-                      { "name": "HI.11" }
-                      ]
-                    }
-                  },
-                  "uses": {
-                    "service": { "name": "HI.10" }
-                  }
-                }
-                ]
-              }
-            }
-          }
-        }
-      }
-    </textarea>
-      <hr>
+     {{datasheet|json}}
+
+      </textarea>
+
+
 
 
   </div>
-    <div class="form-group col-sm-2">
-      <label for="json">Translations:</label>
-      <div class="wrapper">
-        <button type="button" name="button"
-                class="btn btn-sm btn-success col-sm-12"
-                id="boton" #boton (click)="traducirJson(json.value)">Translate to CNF </button>
-        <button type="button" name="button"
-                class="btn btn-sm btn-success col-sm-12" id="boton2" #boton2 (click)="generarEstructura(json.value)">Generate Structure</button>
+    <div class=" col-sm-4">
 
-      </div>
-
-
-      </div>
-    <div class="form-group col-sm-2">
-      <div class="col-sm-12">
-        <label for="json">Solvers Scenarios:</label>
-      </div>
-      <h5 class="col-sm-12">Model Errors</h5>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_1" #boton (click)="analyse_False_Optional_bt()">Falsos Opcionales</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_2" #botont (click)="analyse_self_dependency_bt()">Self Dependecy</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_3" #botont (click)="generarEstructura(json.value)">VP Violations</button>
-      <hr>
-      <h5 class="col-sm-12">Scope Scenarios</h5>
-      <h5 class="col-sm-12">CDS</h5>
-
-
-
-
-    </div>
-    <div class="form-group col-sm-2">
-
-      <h5 class="col-sm-12">Dead Services</h5>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_4" #boton (click)="constraint_contradition_bt()">Constraint Contradition</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_5" #botont (click)="alternative_inclusion_bt()">Alternative Inclusion</button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_6" #botont (click)="mandatory_exclusion_bt()">Mandatory Exclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_7" #botont (click)="parent_exclusion_bt()">Parent Exclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_8" #botont (click)="transitive_inconsistency_bt()">Transitive Inconsistency </button>
-      <h5 class="col-sm-12">Redundancies</h5>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_9" #botont (click)="mandatory_inclusion_bt()">Mandatory Inclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_10" #botont (click)="parent_inclusion_bt()">Parent Inclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_11" #botont (click)="alternative_inclusion_bt()">Alternative Exclusion </button>
-      <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
-              id="boton_test_12" #botont (click)="transitive_redundancy_bt()">Transitive Redundancy </button>
-
-
-    </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4">
-        <h1>Data Output</h1>
+        <h1>Logic Model</h1>
         <pre id="mycnf">{{salida}}</pre>
-      </div>
-      <div class="col-xs-4">
-        <h1>Pre- Results</h1>
-        <button type="button" name="button" class="btn btn-sm btn-info col-sm-3"
-                id="boton_load" #botont (click)="load_cnf()"> Load CNF </button>
 
-        <textarea [(ngModel)]="preResultados" rows="4" cols="50">{{preResultados}}</textarea>
+    </div>
+    <div class=" col-sm-4" style="background-color: #d0d8e8">
+      <h1>Operators</h1>
+      <div class="row">
+        <div class="form-group col-sm-12">
+        <label for="json">Translations:</label>
+        </div>
+        <div class="form-group col-sm-6">
+          <div class="wrapper">
+            <button type="button" name="button"
+                    class="btn btn-sm btn-success col-sm-12"
+                    id="boton" #boton (click)="traducirJson(json.value)">Translate to Formal Model </button>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+
+          <div class="wrapper">
+            <button type="button" name="button"
+                    class="btn btn-sm btn-success col-sm-12" id="boton2" #boton2 (click)="generarEstructura(json.value)">Generate Structure</button>
+
+
+          </div>
+        </div>
       </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label for="json">Queries - Solver</label>
+        </div>
+
+        <div class="form-group col-sm-6">
+          <h5 class="col-sm-12">Model Errors</h5>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_1" #boton (click)="analyse_False_Optional_bt()">False Opcional</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_2" #botont (click)="analyse_self_dependency_bt()">Self Dependecy</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_3" #botont (click)="generarEstructura(json.value)">VP Violations</button>
+
+          <hr>
+          <h5 class="col-sm-12">Scope Scenarios</h5>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_31" #botont (click)="generarEstructura(json.value)">False SpecificVP</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_33" #botont (click)="mandatory_specific_bt()">Mandatory SpecificVP</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_32" #botont (click)="generarEstructura(json.value)">Contradictory Scope</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_62" #botont (click)="generarEstructura(json.value)">False GlobalVP</button>
+          <h5 class="col-sm-12">CDS</h5>
+
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_34" #botont (click)="generarEstructura(json.value)">Cross Redundancy</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_35" #botont (click)="generarEstructura(json.value)">Cross Inconsistency</button>
+
+        </div>
+
+        <div class="form-group col-sm-6">
+
+          <h5 class="col-sm-12">Dead Services</h5>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_4" #boton (click)="constraint_contradition_bt()">Constraint Contradition</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_5" #botont (click)="alternative_inclusion_bt()">Alternative Inclusion</button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_6" #botont (click)="mandatory_exclusion_bt()">Mandatory Exclusion </button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_7" #botont (click)="parent_exclusion_bt()">Parent Exclusion </button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_8" #botont (click)="transitive_inconsistency_bt()">Transitive Inconsistency </button>
+          <h5 class="col-sm-12">Redundancies</h5>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_9" #botont (click)="mandatory_inclusion_bt()">Mandatory Inclusion </button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_10" #botont (click)="parent_inclusion_bt()">Parent Inclusion </button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_11" #botont (click)="alternative_inclusion_bt()">Alternative Exclusion </button>
+          <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                  id="boton_test_12" #botont (click)="transitive_redundancy_bt()">Transitive Redundancy </button>
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+      <div class=" hidden col-sm-4" style="background-color: #d0d8e8">
+        <h1>Operators</h1>
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <label for="json">Translations:</label>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="json">Queries - Solver:</label>
+          </div>
+          <div class="form-group col-sm-6">
+            <div class="wrapper">
+              <button type="button" name="button"
+                      class="btn btn-sm btn-success col-sm-12"
+                      id="boton51" #boton (click)="traducirJson(json.value)">Translate to Formal Model </button>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-6">
+
+              <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                      id="boton_test_52" #boton (click)="analyse_False_Optional_bt()">Valid Modelales</button>
+              <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                      id="boton_test_53" #botont (click)="analyse_self_dependency_bt()">Valid Instantiation</button>
+              <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                      id="boton_test_54" #botont (click)="generarEstructura(json.value)">All Products</button>
+              <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                      id="boton_test_55" #botont (click)="generarEstructura(json.value)">Instantiation Number</button>
+              <button type="button" name="button" class="btn btn-sm btn-info col-sm-12"
+                      id="boton_test_56" #botont (click)="generarEstructura(json.value)">Problems Detection</button>
+
+
+
+
+
+
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Results</h1>
+            <pre id="myresults2">{{resultados}}</pre>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="row" style="background-color: #d0d8e8">
+
       <div class="col-xs-4">
         <h1>Results</h1>
         <pre id="myresults">{{resultados}}</pre>
+
+
+
       </div>
+
+      <div class="col-xs-4">
+        <div class="col-xs-9">
+          <h1>Pre- Results</h1>
+        </div>
+        <div class="col-xs-3" style="    margin-top: 25px;">
+          <button type="button" name="button" class="btn btn-sm btn-info "
+                  id="boton_load" #botont (click)="load_cnf()"> Load CNF </button>
+
+        </div>
+        <div class="col-xs-12">
+        <textarea [(ngModel)]="preResultados" rows="4" cols="40">{{preResultados}}</textarea>
+        </div>
+
+
+
+      </div>
+
+      <div class="col-xs-4">
+        <h1>SAT - Results</h1>
+        <div class="col-xs-12" id="output">
+
+        </div>
+
+      </div>
+
+
 
     </div>
   </div>
 
 
+
+
+
+
 </div>
+
+
+
+
+
+
+
+

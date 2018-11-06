@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>APP 1</title>
+  <title>Sevatax Validator</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,49 +18,105 @@
       color: white;
   }
   #solve{
-   width:100px;
-   position:relative;
-   top:100%;
-   left:40%;
+
   }
   </style>
-  <script type='text/javascript' src="assets/jquery.js"></script>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <script type='text/javascript' src="assets/jquery.js"></script>
 </head>
-<body>
+<body style="background-color: #f1f1f1">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">SEVATAX - VALIDATOR</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#/translate">
+          Individual  Datasheet
+
+        </a>
+
+
+
+      </li>
+
+      <li class="nav-item " routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['groupTranslate']">
+          Datasheets Group
+        </a>
+
+      </li>
+
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="#/repository">
+          Model Repository
+        </a>
+      </li>
+
+      <li class="nav-item" id="solve">
+        <a  class="nav-link" >
+          SAT SOLVER
+        </a>
+      </li>
+
+
+
+    </ul>
+
+  </div>
+</nav>
+
+
+
+
   <app-root>Loading...</app-root>
 
 
 
-<script>
-  var Module = {
-    noInitialRun : true,
-    'print': function(text) {
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    var Module = {
+      noInitialRun : true,
+      'print': function(text) {
         var element = document.getElementById('output');
         element.innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
 
         //console.log(text);
-    }
-  };
+      }
+    };
   </script>
   <script type='text/javascript' src="assets/minisat.js"></script>
 
-  <div class="wrapper">
-    <button id="solve" class="btn btn-success">SAT SOLVER</button>
-  </div>
-
   <script type='text/javascript'>
-  $("#solve").click(function() {
-    var element = document.getElementById('output');
-    element.innerHTML = "";
-    htmlstuff = Module.cwrap('htmlstuff_c', 'int', ['string']);
-    a = htmlstuff(document.getElementById("mycnf").innerText);
-  });
+    $("#solve").click(function() {
+      var element = document.getElementById('output');
+      element.innerHTML = "";
+      htmlstuff = Module.cwrap('htmlstuff_c', 'int', ['string']);
+      a = htmlstuff(document.getElementById("mycnf").innerText);
+    });
   </script>
 
-  <div class="col-xs-6" id="output"></div>
+
+
 
 
 
 </body>
 </html>
+
+
+
