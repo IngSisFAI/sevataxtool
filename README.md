@@ -8,7 +8,7 @@
  
  Keywords: Analysis of Variability Models; Automatic Analysis; Software Product Line
  
- ## Implementacion
+ ## Implementation
  
  Clone or download the project. 
  
@@ -31,6 +31,7 @@
  G. Braun,  M. Pol’la,  L. Cecchi, A. Buccella, P. Fi-llottrani, and A. Cechich.  A DL semantics for reasoning over ovm-based variability models.In Proceedings of the 30th International Workshop on Description Logics, Montpellier, France, July18-21, 2017.
   
  A. Buccella,  M.  Pol’la,  E. Ruiz de Galarreta, and A. Cechich.  Combining automatic  variability  analysis  tools:  An  spl  approach for building a framework for composition.In O. Gervasi, B. Murgante, S. Misra,  E. Stankova,  C. M.  Torre, etol editors. Computational  Science  and  Its  Applications – ICCSA 2018, pages 435–451, Cham, 2018.Springer International Publishing.
+ 
  
 ## Acknowledgments
  

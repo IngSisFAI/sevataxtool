@@ -21,6 +21,8 @@ export class StrategyUsComponent implements OnInit {
   ngOnInit() {
   }
 
+  //generar
+
 
   public generarEstructura(entradaJson){
 

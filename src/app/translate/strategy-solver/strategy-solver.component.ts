@@ -57,7 +57,7 @@ export class StrategySOLVERComponent implements OnInit {
 
 
 
-
+//recorrer
 
   private recorrerServicio(serv:Service){
 
