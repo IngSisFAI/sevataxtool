@@ -14,10 +14,7 @@
  
  Run `ng serve` for a localhost implementation. Go to `http://localhost:4200/`.
  
- ## Estructura temporaria
- 
- The tool only accepts inputs as JSON files. 
- 
+ The tool only accepts inputs as JSON files.  
  
  ## Acknowledgments
  
