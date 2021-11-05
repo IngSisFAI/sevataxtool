@@ -1,12 +1,12 @@
-## Variability Modelling; Automatic Analysis;  Software Product Line
- 
+## SeVaTax Tool
+
  This is the SeVaTax tool implemented for supported the SeVaTax process. It is a  Web tool  that follows a layered model implemented as a client-server architecture. 
  
  In the following figure we show the software components and inputs/outputs included in the SeVaTax architecture. The figure is divided into four modules with the components and input/output flows involved.
  
  ![Screenshot](tool.png)
  
- 
+ Keywords: Analysis of Variability Models; Automatic Analysis; Software Product Line
  
  ## Implementacion
  
@@ -16,12 +16,7 @@
  
  The tool only accepts inputs as JSON files.  
  
- ## Acknowledgments
- 
- 
- This work is partially supported by the UNComa project 04/F009 "Reuso de Software orientado a Dominios - Parte II" part of the program "Desarrollo de Software Basado en Reuso - Parte II."
- 
- This work is part of the PhD thesis of Matías Pol'la. Universidad Nacional del Centro de la Provincia de Buenos Aires. Argentina. 01/06/2021
+ Examples of datasheets can be found in src/assets/datasheet
  
  ## Publications
  
@@ -34,4 +29,11 @@
  G. Braun,  M. Pol’la,  L. Cecchi, A. Buccella, P. Fi-llottrani, and A. Cechich.  A DL semantics for reasoning over ovm-based variability models.In Proceedings of the 30th International Workshop on Description Logics, Montpellier, France, July18-21, 2017.
   
  A. Buccella,  M.  Pol’la,  E. Ruiz de Galarreta, and A. Cechich.  Combining automatic  variability  analysis  tools:  An  spl  approach for building a framework for composition.In O. Gervasi, B. Murgante, S. Misra,  E. Stankova,  C. M.  Torre, etol editors. Computational  Science  and  Its  Applications – ICCSA 2018, pages 435–451, Cham, 2018.Springer International Publishing.
+ 
+## Acknowledgments
+ 
+ 
+ This work is partially supported by the UNComa project 04/F009 "Reuso de Software orientado a Dominios - Parte II" part of the program "Desarrollo de Software Basado en Reuso - Parte II."
+ 
+ This work is part of the PhD thesis of Matías Pol'la. Universidad Nacional del Centro de la Provincia de Buenos Aires. Argentina. 01/06/2021
  
